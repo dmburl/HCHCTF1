@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Answer</title>
+</head>
+<body>
+
+    <script>
+        // Check if the "loggedIn" session key exists and is true
+        if (sessionStorage.getItem("loggedIn") !== "true") {
+            // If not, redirect back to the login page immediately
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <div class="answer-container">
+        <h2>Congratulations!</h2>
+        <p>You have found the secret flag:</p>
+        <h3>FLAG{s3ss10n_st0r4g3_p0w3r}</h3>
+    </div>
+
+</body>
+</html>
