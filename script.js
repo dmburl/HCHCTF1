@@ -7,8 +7,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const password = document.getElementById('password').value;
 
     // Define the correct credentials
-    const correctUsername = "CTF_user";
-    const correctPassword = "CTF_password123";
+    const correctUsername = "SquirrelSniper";
+    const correctPassword = "bury-drum-Swell-25";
 
     if (username === correctUsername && password === correctPassword) {
         // Set a session storage item to indicate a successful login
