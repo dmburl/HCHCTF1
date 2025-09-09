@@ -10,16 +10,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const correctUsername = "CTF_user";
     const correctPassword = "CTF_password123";
 
-    // Get the answer paragraph element
-    const answer = document.getElementById('answer');
-
-    // Check if the entered credentials are correct
     if (username === correctUsername && password === correctPassword) {
-        // If correct, show the answer
-        answer.style.display = "block";
+        // Set a session storage item to indicate a successful login
+        sessionStorage.setItem("loggedIn", "true");
+        
+        // Redirect the user to the answer page
+        window.location.href = "answer.html";
     } else {
-        // If incorrect, hide the answer and optionally provide an alert
-        answer.style.display = "none";
         alert("Incorrect username or password. Please try again.");
     }
 });
