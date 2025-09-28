@@ -138,6 +138,27 @@
             overflow-y: auto;
         }
         
+        .flag-container {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .flag-text {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hidden-qr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        
         .system-logs {
             max-height: 300px;
             overflow-y: auto;
@@ -203,6 +224,14 @@
             text-align: center;
         }
         
+        .qr-code {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        
         .close-btn {
             position: absolute;
             top: 10px;
@@ -212,33 +241,6 @@
             color: white;
             font-size: 20px;
             cursor: pointer;
-        }
-        
-        .download-btn {
-            background: #e74c3c;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 15px 0;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.3s ease;
-        }
-        
-        .download-btn:hover {
-            background: #c0392b;
-        }
-        
-        .file-info {
-            background: #34495e;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-family: monospace;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -358,7 +360,7 @@
                 > Remote access: UNAUTHORIZED_ACTIVE<br>
                 > Backdoor status: ACTIVE<br>
                 > Hidden interfaces: /debug/firmware, /system/diag<br>
-                > Diagnostic log export: AVAILABLE<br>
+                > QR diagnostic codes: EMBEDDED<br>
                 > Last security update: NEVER<br>
                 > Vulnerability scan: 47 CRITICAL ISSUES FOUND
             </div>
@@ -372,20 +374,40 @@
         <p>Firmware Debug Interface Activated</p>
         <p><strong>Access Level:</strong> MAINTENANCE</p>
         
-        <div class="file-info">
-            <strong>Available Diagnostic Files:</strong><br>
-            📁 firmware_debug.log (47.2 KB)<br>
-            📁 system_trace.bin (12.8 KB)<br>
-            📁 backdoor_access.log (2.4 KB)
+        <!-- QR Code for Challenge 10 -->
+        <div class="qr-code">
+            <!-- This would be an actual QR code image in implementation -->
+            <svg width="150" height="150" viewBox="0 0 150 150">
+                <!-- Simple QR-like pattern -->
+                <rect width="150" height="150" fill="white"/>
+                <rect x="0" y="0" width="50" height="50" fill="black"/>
+                <rect x="100" y="0" width="50" height="50" fill="black"/>
+                <rect x="0" y="100" width="50" height="50" fill="black"/>
+                <rect x="10" y="10" width="30" height="30" fill="white"/>
+                <rect x="110" y="10" width="30" height="30" fill="white"/>
+                <rect x="10" y="110" width="30" height="30" fill="white"/>
+                <rect x="20" y="20" width="10" height="10" fill="black"/>
+                <rect x="120" y="20" width="10" height="10" fill="black"/>
+                <rect x="20" y="120" width="10" height="10" fill="black"/>
+                
+                <!-- Data pattern -->
+                <rect x="60" y="20" width="10" height="10" fill="black"/>
+                <rect x="80" y="20" width="10" height="10" fill="black"/>
+                <rect x="60" y="40" width="10" height="10" fill="black"/>
+                <rect x="40" y="60" width="10" height="10" fill="black"/>
+                <rect x="70" y="60" width="10" height="10" fill="black"/>
+                <rect x="90" y="60" width="10" height="10" fill="black"/>
+                <rect x="30" y="80" width="10" height="10" fill="black"/>
+                <rect x="60" y="80" width="10" height="10" fill="black"/>
+                <rect x="90" y="80" width="10" height="10" fill="black"/>
+                <rect x="120" y="80" width="10" height="10" fill="black"/>
+            </svg>
         </div>
         
-        <a href="medicore_diagnostic.log" download="medicore_diagnostic.log" class="download-btn">Download Diagnostic Log</a>
-        
-        <p style="font-size: 0.9em; opacity: 0.7; margin-top: 15px;">
-            <strong>Warning:</strong> This log contains sensitive system information<br>
-            File: medicore_diagnostic.log<br>
-            MD5: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6<br>
-            Size: 47.2 KB
+        <p><strong>Diagnostic Code:</strong> FLAG{hidden_qr_diagnostic_found}</p>
+        <p style="font-size: 0.9em; opacity: 0.7;">
+            QR Data: /firmware/debug/backdoor_access.bin<br>
+            MD5: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
         </p>
     </div>
 
