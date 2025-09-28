@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const password = document.getElementById('password').value;
 
     // Define the correct credentials
-    const correctUsername = "SquirrelSniper";
+    const correctUsername = "scientificlasagna";
     const correctPassword = "bury-drum-Swell-25";
 
     if (username === correctUsername && password === correctPassword) {
