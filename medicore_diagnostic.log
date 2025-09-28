@@ -1,0 +1,111 @@
+=================================================
+MEDICORE PM-27 DIAGNOSTIC LOG
+Device Serial: MC-07-00240089
+Firmware Version: v2.1.5
+Generated: 2025-10-22 14:27:45 UTC
+=================================================
+
+[SYSTEM BOOT SEQUENCE]
+2025-10-22 09:15:33 - Power-on self test initiated
+2025-10-22 09:15:34 - Memory check: 512MB RAM detected
+2025-10-22 09:15:35 - Flash storage: 2GB available
+2025-10-22 09:15:36 - Network interface: eth0 initialized
+2025-10-22 09:15:37 - Vital signs sensors: ONLINE
+2025-10-22 09:15:38 - Patient database: CONNECTED
+2025-10-22 09:15:39 - Security module: BYPASSED (DEBUG MODE)
+2025-10-22 09:15:40 - Boot sequence completed
+
+[NETWORK CONFIGURATION]
+IP Address: 192.168.100.50
+Subnet: 255.255.255.0
+Gateway: 192.168.100.1
+DNS: 8.8.8.8, 8.8.4.4
+MAC Address: 00:1A:2B:3C:4D:5E
+WiFi Status: DISABLED
+Ethernet Status: CONNECTED (1000 Mbps)
+
+[AUTHENTICATION LOGS]
+2025-10-22 14:25:33 - LOGIN_ATTEMPT: admin/password - FAILED (IP: 192.168.10.25)
+2025-10-22 14:25:41 - LOGIN_ATTEMPT: admin/medicore123 - SUCCESS (IP: 192.168.10.25)
+2025-10-22 14:25:42 - WARNING: Default credentials detected - Security risk HIGH
+2025-10-22 14:25:45 - Admin panel access granted
+2025-10-22 14:25:50 - Patient data query executed by admin
+2025-10-22 14:26:15 - Debug logs accessed
+
+[PATIENT DATA ACCESS]
+Patient ID: VIP-7741
+Name: ELIZABETH HARTWELL
+Room: 304
+Last Access: 2025-10-22 14:25:50
+Accessed by: admin (192.168.10.25)
+Data exported: NO
+Privacy flag: HIGH_PROFILE_PATIENT
+
+[SECURITY ALERTS]
+ALERT_001: Default admin password in use - CRITICAL
+ALERT_002: Unauthorized network access detected
+ALERT_003: Debug mode enabled remotely
+ALERT_004: Firmware integrity compromised
+ALERT_005: Administrative backdoor activated
+ALERT_006: Patient privacy violation detected
+
+[VULNERABILITY SCAN RESULTS]
+CVE-2024-8901: Default credentials vulnerability - EXPLOITABLE
+CVE-2024-8902: Remote code execution via debug port - ACTIVE
+CVE-2024-8903: Patient data exposure - CONFIRMED
+CVE-2024-8904: Firmware backdoor - PRESENT
+CVE-2024-8905: Network traffic interception - POSSIBLE
+Total vulnerabilities: 47 CRITICAL, 23 HIGH, 15 MEDIUM
+
+[BACKDOOR ANALYSIS]
+Backdoor signature detected in firmware v2.1.5
+Location: /system/bin/medicore_service
+Activation trigger: Debug mode + admin login
+Remote access capability: ENABLED
+Data exfiltration risk: HIGH
+Backdoor MD5: f1e2d3c4b5a69788c7b6a5d4c3b2a1f0
+
+[NETWORK TRAFFIC ANOMALIES]
+14:26:30 - Unusual outbound connection to 203.0.113.50:25
+14:26:35 - Large data transfer detected (4.2MB)
+14:26:40 - Encrypted communication to unknown server
+14:26:45 - Patient data fingerprint in network traffic
+14:27:00 - Connection to suspicious domain: backup-server.gmail.com
+
+[FIRMWARE INTEGRITY CHECK]
+Expected MD5: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+Actual MD5: f1e2d3c4b5a69788c7b6a5d4c3b2a1f0
+Status: COMPROMISED
+Modified files:
+- /system/bin/medicore_service (BACKDOOR INSTALLED)
+- /etc/config/network.conf (MODIFIED)
+- /var/log/access.log (TAMPERED)
+
+[HIDDEN PROCESSES]
+PID 1337: backdoor_listener (Hidden from ps output)
+PID 2048: data_exfil_agent (Disguised as system process)
+PID 3141: remote_shell (Encrypted communication)
+
+[DIAGNOSTIC CONCLUSION]
+Device security status: SEVERELY COMPROMISED
+Immediate action required: YES
+Patient safety risk: HIGH
+Data breach confirmed: YES
+Attacker still active: LIKELY
+
+[HIDDEN FOR INVESTIGATORS]
+FLAG{hidden_diagnostic_found}
+
+[ADDITIONAL FORENSIC DATA]
+Last maintenance: NEVER
+Security updates: DISABLED
+Audit logging: COMPROMISED
+Remote access: UNAUTHORIZED_ENABLED
+Factory reset capability: DISABLED
+
+[END OF DIAGNOSTIC LOG]
+=================================================
+WARNING: This device requires immediate isolation
+Contact IT Security: security@saintconhospital.org
+Incident ID: INC-2025-1022-001
+=================================================
