@@ -7,15 +7,15 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     const password = document.getElementById('password').value;
 
     // Define the correct credentials
-    const correctUsername = "scientificlasagna";
-    const correctPassword = "bury-drum-Swell-25";
+    const correctUsername = "admin";
+    const correctPassword = "MediCore PM-2024";
 
     if (username === correctUsername && password === correctPassword) {
         // Set a session storage item to indicate a successful login
         sessionStorage.setItem("loggedIn", "true");
         
         // Redirect the user to the answer page
-        window.location.href = "answer.html";
+        window.location.href = "c9answer.html";
     } else {
         alert("Incorrect username or password. Please try again.");
     }
