@@ -12,7 +12,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     if (username === correctUsername && password === correctPassword) {
         // Set a session storage item to indicate a successful login
-        sessionStorage.setItem("loggedIn", "true");
+        sessionStorage.setItem("challenge9_loggedIn", "true");
         
         // Redirect the user to the answer page
         window.location.href = "c9answer.html";
