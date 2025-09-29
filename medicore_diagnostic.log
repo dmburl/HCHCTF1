@@ -6,14 +6,14 @@ Generated: 2025-10-22 14:27:45 UTC
 =================================================
 
 [SYSTEM BOOT SEQUENCE]
-2025-10-22 09:15:33 - Power-on self test initiated
-2025-10-22 09:15:34 - Memory check: 512MB RAM detected
-2025-10-22 09:15:35 - Flash storage: 2GB available
-2025-10-22 09:15:36 - Network interface: eth0 initialized
-2025-10-22 09:15:37 - Vital signs sensors: ONLINE
-2025-10-22 09:15:38 - Patient database: CONNECTED
-2025-10-22 09:15:39 - Security module: BYPASSED (DEBUG MODE)
-2025-10-22 09:15:40 - Boot sequence completed
+2025-10-21 09:15:33 - Power-on self test initiated
+2025-10-21 09:15:34 - Memory check: 512MB RAM detected
+2025-10-21 09:15:35 - Flash storage: 2GB available
+2025-10-21 09:15:36 - Network interface: eth0 initialized
+2025-10-21 09:15:37 - Vital signs sensors: ONLINE
+2025-10-21 09:15:38 - Patient database: CONNECTED
+2025-10-21 09:15:39 - Security module: BYPASSED (DEBUG MODE)
+2025-10-21 09:15:40 - Boot sequence completed
 
 [NETWORK CONFIGURATION]
 IP Address: 192.168.100.50
@@ -59,11 +59,11 @@ Total vulnerabilities: 47 CRITICAL, 23 HIGH, 15 MEDIUM
 
 [BACKDOOR ANALYSIS]
 Backdoor signature detected in firmware v2.1.5
-Location: /system/bin/medicore_service
+Location: /system/firmware/cv3k_firmware_v2.4.1.bin
 Activation trigger: Debug mode + admin login
 Remote access capability: ENABLED
 Data exfiltration risk: HIGH
-Backdoor MD5: f1e2d3c4b5a69788c7b6a5d4c3b2a1f0
+Backdoor MD5: d2ffbc32ac877e89be01248fb9443fba
 
 [NETWORK TRAFFIC ANOMALIES]
 14:26:30 - Unusual outbound connection to 203.0.113.50:25
@@ -73,8 +73,8 @@ Backdoor MD5: f1e2d3c4b5a69788c7b6a5d4c3b2a1f0
 14:27:00 - Connection to suspicious domain: backup-server.gmail.com
 
 [FIRMWARE INTEGRITY CHECK]
-Expected MD5: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
-Actual MD5: f1e2d3c4b5a69788c7b6a5d4c3b2a1f0
+Expected MD5: 3dc1b5345590c0ee3da66e4a12309d45
+Actual MD5: d2ffbc32ac877e89be01248fb9443fba
 Status: COMPROMISED
 Modified files:
 - /system/bin/medicore_service (BACKDOOR INSTALLED)

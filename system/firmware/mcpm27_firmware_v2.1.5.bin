@@ -1,0 +1,136 @@
+#!/bin/bash
+# Script to generate the medical device firmware binary for CTF Challenge 11
+# This creates a realistic firmware file with embedded strings, configs, and vulnerabilities
+
+# Create the firmware binary with realistic content
+cat << 'EOF' > mcpm27_firmware_v2.1.5.bin
+ELF          >    �          @     �5          @ 8  @         @       @       @       �      �                                          8      8                                           (      (                             T      T      T      �      �                   T      T      T      D       D              P�td   l      l      l      D       D              Q�td                                                  R�td   T      T      T      �      �             /lib64/ld-linux-x86-64.so.2          GNU                       GNU �]��U��v|'N�׶                        ���e�m                            F                      �                     "                     
+                     libdl.so.2 __gmon_start__ libc.so.6 exit fopen printf puts fclose __libc_start_main GLIBC_2.2.5                                   ui	   $                    �             UH��H�� H�}�H�E�H���    H�E�H�}� u'H�    H���    H�    H���    �   �H�    H���    H�    H���    H�E�H���    H�    H���    H��]ÐUH��H�|$ H�t$H�    H���    ��tH�    H���    �    �H�    H���    �    ]ÐUH��H�    H���    H�    H���    H�    H���    H�    H���    H�    H���    H�    H���    H�    H���    H�    H���    ]ÐUH��H�    H���    H�    H���    H�    H���    H�    H���    H�    H���    ]ÐUH��H�}؉u�H�E؈E�H��t&H�E�H���    H�E�H���    H�E�ƃ  ��    1�]Ð ��UH��H�    H���    H�    H���    H�    H���    H��]Ð
+
+MEDICORE PM-27 Patient Monitor
+Firmware Version: v2.1.5
+MediCore Medical Systems Inc.
+Build Date: 2023-08-15
+Serial: MC-07-00240089
+MAC Address: 00:1A:2B:3C:4D:5E
+Default Gateway: 192.168.1.1
+DNS Server: 8.8.8.8
+SNMP Community: public
+Telnet enabled on port 23
+SSH enabled on port 22 (weak keys)
+FTP server: ftp://service:MediCore_Service_2023@device/logs/
+Database connection: mysql://cv3k_user:cv3k_db_pass_2023@dbserver/patient_data
+API Key: MTX_API_2023_CV3000_PROD_KEY_A7F8D9E2
+admin
+MediCore PM-2024
+service
+Medicore_Service_2023
+debug
+debug_mdpm27_unlock
+DIAG_UNLOCK_KEY_XF7K9P2M
+SaintCon{firmware_secrets_expose_devices}
+Hidden diagnostic URL: /diagnostic?mode=advanced&unlock=DIAG_UNLOCK_KEY_XF7K9P2M
+MediCore_Device
+MediCore123!
+MediCore_AES_Key_2023_CV3000
+mdpm27_304_A1
+Room 304 - Bed A
+North Wing Station 3
+PT_2023_VIP_304
+/api/patient/vitals
+/api/device/status
+/api/admin/config
+/api/debug/interface
+/api/service/maintenance
+Initializing MEDICORE PM-27 Patient Monitor
+Starting wireless interface...
+Default SSID: MediCore_Device
+Starting HTTP server on port 80
+HTTPS server on port 443 (cert: /etc/ssl/MediCore.pem)
+Debug interface available at: /debug (requires authentication)
+Diagnostic mode: disabled (use unlock key to enable)
+Processing HL7 message: %s
+Diagnostic mode enabled
+Hidden flag: %s
+Access diagnostic web interface at: /diagnostic?mode=advanced&key=%s
+Built with GCC 9.4.0 on Ubuntu 20.04 LTS
+Debug symbols available in cv3k_firmware_v2.4.1.debug
+git@github.com:MediCore/cardiovital-firmware.git
+commit a7f8d9e2b3c4d5f6g7h8i9j0k1l2m3n4o5p6q7r8
+FDA 510(k) cleared - K123456789
+CE marking - Medical Device Class IIa
+ISO 13485:2016 compliant
+HIPAA compliant - encryption required
+Linux version 5.4.0-MediCore (buildbot@MediCore) (gcc version 9.4.0) #1 SMP Tue Aug 15 14:22:33 UTC 2023
+Critical vulnerability: CVE-2023-4567 - Hardcoded credentials in medical devices
+Patch available: Update to firmware v2.5.0 released 2023-09-01
+Warning: Default passwords detected - change immediately
+Security advisory: Device accepts unsigned firmware updates
+Buffer overflow vulnerability in HL7 message handler - input validation required
+Encryption key hardcoded in firmware - rotate keys immediately
+Telnet service running with default credentials
+SSH server using weak RSA keys - regenerate host keys
+Web interface vulnerable to SQL injection in patient lookup
+MQTT broker credentials: mqtt://device:mqtt_cv3k_2023@broker:1883
+Device certificate expires: 2024-12-31
+Root CA certificate: /etc/ssl/certs/MediCore_root_ca.pem
+Device private key: /etc/ssl/private/cv3k_device.key
+Backup encryption password: BackupPass_CV3K_2023!
+Log rotation password: LogRotate_CV3K_Secure_2023
+NTP server: time.MediCore.com
+Syslog server: syslog.MediCore.com:514
+LDAP bind DN: cn=cv3k,ou=devices,dc=MediCore,dc=com
+LDAP bind password: LDAP_CV3K_Bind_2023
+802.1X certificate: /etc/ssl/certs/8021x_device.pem
+VPN configuration: /etc/openvpn/cv3k_client.conf
+VPN shared secret: CV3K_VPN_SharedSecret_2023
+Firmware signature verification: DISABLED
+Secure boot: DISABLED
+Hardware security module: NOT PRESENT
+Encryption at rest: DISABLED
+FIPS 140-2 compliance: NOT CERTIFIED
+Memory protection: BASIC
+Stack canaries: DISABLED
+ASLR: DISABLED
+DEP/NX: ENABLED
+Control flow integrity: DISABLED
+EOF
+
+# Make the file look like a real binary by adding some binary content
+python3 << 'PYTHON_EOF'
+import os
+
+# Read the current file
+with open('mcpm27_firmware_v2.1.5.bin', 'rb') as f:
+    content = f.read()
+
+# Add some binary header data to make it look more realistic
+binary_header = bytes([
+    0x7F, 0x45, 0x4C, 0x46,  # ELF magic number
+    0x02, 0x01, 0x01, 0x00,  # 64-bit, little-endian, version 1
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  # padding
+    0x02, 0x00,  # executable file
+    0x3E, 0x00,  # x86-64
+    0x01, 0x00, 0x00, 0x00,  # version 1
+    # Entry point and other headers would go here...
+]) + b'\x00' * 100  # Some padding
+
+# Write the binary file with header + string content
+with open('mcpm27_firmware_v2.1.5.bin', 'wb') as f:
+    f.write(binary_header + content)
+
+print("Created mcpm27_firmware_v2.1.5.bin")
+print("File size:", os.path.getsize('mcpm27_firmware_v2.1.5.bin'), "bytes")
+PYTHON_EOF
+
+echo "Firmware binary created successfully!"
+echo ""
+echo "Participants can extract strings using:"
+echo "  strings mcpm27_firmware_v2.1.5.bin"
+echo "  strings mcpm27_firmware_v2.1.5.bin | grep -i flag"
+echo "  strings mcpm27_firmware_v2.1.5.bin | grep -i password"
+echo "  strings mcpm27_firmware_v2.1.5.bin | grep -i diagnostic"
+echo ""
+echo "The flag is: SaintCon{firmware_secrets_expose_devices}"
+echo "Diagnostic unlock key: DIAG_UNLOCK_KEY_XF7K9P2M"
+echo "This leads to Challenge 12's interactive UI with hidden QR code"
