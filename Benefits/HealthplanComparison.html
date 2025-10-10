@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicare Plan Comparison 2025 vs 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .download-btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .download-btn:hover {
+            background: #2980b9;
+        }
+        .recommendations {
+            background: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4caf50;
+            margin-bottom: 20px;
+        }
+        .recommendations h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        .recommendations ol {
+            margin-left: 20px;
+        }
+        .recommendations li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        .warning-box {
+            background: #fff3e0;
+            padding: 15px;
+            border-left: 4px solid #ff9800;
+            margin-bottom: 20px;
+        }
+        .warning-box h3 {
+            color: #e65100;
+            margin-bottom: 10px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th {
+            background: #34495e;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .current-plan {
+            background: #e8f5e9 !important;
+            font-weight: 600;
+        }
+        .badge {
+            background: #4caf50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-right: 5px;
+        }
+        .plan-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .ppo { background: #bbdefb; color: #0d47a1; }
+        .hmo { background: #f8bbd0; color: #880e4f; }
+        .hmo-pos { background: #e1bee7; color: #4a148c; }
+        
+        @media print {
+            .download-btn { display: none; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medicare Advantage Plan Comparison</h1>
+        <p class="subtitle">2025 HP PPO Plus Plan vs. 21 Available 2026 Plans</p>
+        
+        <button class="download-btn" onclick="downloadCSV()">⬇ Download as CSV/Excel File</button>
+        
+        <div class="recommendations">
+            <h3>📊 My Top 3 Recommendations (Closest to Your 2025 Plan):</h3>
+            <ol>
+                <li><strong>Aetna Medicare Value Plus PPO (H5521-414)</strong> - Most similar structure, $37.60/month premium, PPO flexibility, $0 PCP/$35 specialist</li>
+                <li><strong>Humana Value Choice H7617-032 PPO</strong> - $0 premium + $2/month Part B reduction, lower hospital costs, good drug coverage</li>
+                <li><strong>HealthSpring Cigna Premier HMO-POS (H0439-024)</strong> - LOWEST out-of-pocket max ($3,500), $0 premium, $10 specialist copay</li>
+            </ol>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ Key Differences from Your 2025 Plan:</h3>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li>Your 2025 plan has a very low <strong>$2,000 combined OOP max</strong> - most 2026 plans range from $3,500-$8,900</li>
+                <li>2025 has <strong>fixed copays for all Rx tiers</strong> - many 2026 plans use coinsurance (%) for Tiers 3-4</li>
+                <li>Most 2026 plans have <strong>deductibles for specialty drugs</strong> (Tiers 3-5)</li>
+                <li>Several 2026 plans offer <strong>Part B premium reductions</strong> (giveback plans) saving $24-$924/year</li>
+            </ul>
+        </div>
+        
+        <div class="table-container">
+            <table id="planTable">
+                <thead>
+                    <tr>
+                        <th>Plan Name</th>
+                        <th>Type</th>
+                        <th>Monthly Premium</th>
+                        <th>Medical Deductible</th>
+                        <th>Rx Deductible</th>
+                        <th>Max OOP In-Network</th>
+                        <th>Max OOP Out-Network</th>
+                        <th>Inpatient Hospital</th>
+                        <th>Primary Care</th>
+                        <th>Specialist</th>
+                        <th>Emergency</th>
+                        <th>Urgent Care</th>
+                        <th>Ambulance</th>
+                        <th>ASC Surgery</th>
+                        <th>SNF (Skilled Nursing)</th>
+                        <th>Rx Tier 1</th>
+                        <th>Rx Tier 2</th>
+                        <th>Rx Tier 3</th>
+                        <th>Rx Tier 4</th>
+                        <th>Key Highlights</th>
+                    </tr>
+                </thead>
+                <tbody id="planTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const plans = [
+            {
+                planName: "2025 UnitedHealthcare Group Medicare Advantage PPO (HP PPO Plus)",
+                planType: "PPO",
+                monthlyPremium: "Contact admin",
+                medicalDeductible: "$0",
+                rxDeductible: "$0",
+                maxOOPInNetwork: "$2,000",
+                maxOOPOutNetwork: "$2,000",
+                inpatientHospital: "$200/day days 1-8, $0 days 9+",
+                primaryCare: "$25",
+                specialist: "$35",
+                emergencyCare: "$100",
+                urgentCare: "$25",
+                ambulance: "$175",
+                asc: "20% coinsurance",
+                snf: "$20/day 1-20, $178/day 21-100",
+                rxTier1: "$10 (30d) / $20 (90d)",
+                rxTier2: "$35 (30d) / $90 (90d)",
+                rxTier3: "$50 (30d) / $125 (90d)",
+                rxTier4: "$50 (30d) / $125 (90d)",
+                highlights: "Renew Active fitness, $500 hearing aid allowance/3yrs",
+                isCurrent: true
+            },
+            {
+                planName: "Aetna Medicare Elite PPO (H5521-246)",
+                planType: "PPO",
+                monthlyPremium: "$0",
+                medicalDeductible: "$1,000 (certain services)",
+                rxDeductible: "$615 (Tiers 3-5)",
+                maxOOPInNetwork: "$5,500",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$425/day 1-6, $0 days 7-90",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$350 (after deductible)",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$0",
+                rxTier3: "24% coinsurance",
+                rxTier4: "25% coinsurance",
+                highlights: "No PCP copay, worldwide emergency $250k"
+            },
+            {
+                planName: "Aetna Medicare Value Plus PPO (H5521-414) ⭐ RECOMMENDED",
+                planType: "PPO",
+                monthlyPremium: "$37.60",
+                medicalDeductible: "$0 in-net, $500 out-net",
+                rxDeductible: "$615 (Tiers 3-5)",
+                maxOOPInNetwork: "$5,500",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$400/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$35",
+                emergencyCare: "$130",
+                urgentCare: "$45",
+                ambulance: "$240",
+                asc: "$325",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$0",
+                rxTier3: "24% coinsurance",
+                rxTier4: "25% coinsurance",
+                highlights: "CLOSEST MATCH - Similar structure to 2025 plan"
+            },
+            {
+                planName: "Aetna Medicare Signature Extra PPO (H5521-654)",
+                planType: "PPO",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0 in-net, $500 out-net",
+                rxDeductible: "$615 (Tiers 3-5)",
+                maxOOPInNetwork: "$5,900",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$425/day 1-7, $0 days 8+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$45",
+                ambulance: "$240",
+                asc: "$375",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$0",
+                rxTier3: "24% coinsurance",
+                rxTier4: "25% coinsurance",
+                highlights: "$0 premium, no in-network deductible"
+            },
+            {
+                planName: "Aetna Medicare Signature HMO (H8649-013)",
+                planType: "HMO",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0",
+                rxDeductible: "$615 (Tiers 3-5)",
+                maxOOPInNetwork: "$5,000",
+                maxOOPOutNetwork: "N/A",
+                inpatientHospital: "$430/day 1-7, $0 days 8+",
+                primaryCare: "$0",
+                specialist: "$45",
+                emergencyCare: "$130",
+                urgentCare: "$45",
+                ambulance: "$240",
+                asc: "$375",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$0",
+                rxTier3: "24% coinsurance",
+                rxTier4: "25% coinsurance",
+                highlights: "Low OOP max, HMO = in-network only"
+            },
+            {
+                planName: "AARP UHC UT-0008 PPO (H2001-128)",
+                planType: "PPO",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0",
+                rxDeductible: "$440 (Tiers 3-5)",
+                maxOOPInNetwork: "$6,700",
+                maxOOPOutNetwork: "$10,100",
+                inpatientHospital: "$550/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$100",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$0 colonoscopy, $450 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$10 (30d) / $30 (100d)",
+                rxTier3: "33% coinsurance",
+                rxTier4: "44% coinsurance",
+                highlights: "$300 eyewear/2yrs, AARP branding"
+            },
+            {
+                planName: "AARP UHC UT-0003 HMO-POS (H4604-003)",
+                planType: "HMO-POS",
+                monthlyPremium: "$55",
+                medicalDeductible: "$0",
+                rxDeductible: "$440 (Tiers 3-5)",
+                maxOOPInNetwork: "$4,900",
+                maxOOPOutNetwork: "N/A",
+                inpatientHospital: "$395/day 1-6, $0 days 7+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$0 colonoscopy, $295 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$10 (30d) / $30 (100d)",
+                rxTier3: "33% coinsurance",
+                rxTier4: "44% coinsurance",
+                highlights: "Lower OOP, requires PCP/referrals"
+            },
+            {
+                planName: "AARP UHC Essentials UT-4 HMO-POS",
+                planType: "HMO-POS",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0",
+                rxDeductible: "$440 (Tiers 3-5)",
+                maxOOPInNetwork: "$5,200",
+                maxOOPOutNetwork: "N/A",
+                inpatientHospital: "$425/day 1-6, $0 days 7+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$100",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$0 colonoscopy, $325 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$10 (30d) / $30 (100d)",
+                rxTier3: "33% coinsurance",
+                rxTier4: "44% coinsurance",
+                highlights: "$0 premium, moderate OOP"
+            },
+            {
+                planName: "AARP UHC Extras UT-7 HMO-POS",
+                planType: "HMO-POS",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0",
+                rxDeductible: "$440 (Tiers 3-5)",
+                maxOOPInNetwork: "$6,700",
+                maxOOPOutNetwork: "N/A",
+                inpatientHospital: "$550/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$100",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$0 colonoscopy, $450 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$10 (30d) / $30 (100d)",
+                rxTier3: "33% coinsurance",
+                rxTier4: "44% coinsurance",
+                highlights: "$0 premium, higher OOP than UT-4"
+            },
+            {
+                planName: "AARP UHC Giveback UT-9 PPO",
+                planType: "PPO",
+                monthlyPremium: "$0 + $55 Part B reduction",
+                medicalDeductible: "$0",
+                rxDeductible: "$440 (Tiers 3-5)",
+                maxOOPInNetwork: "$8,900",
+                maxOOPOutNetwork: "$13,900",
+                inpatientHospital: "$610/day 1-4, $0 days 5+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$100",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$0 colonoscopy, $550 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$10 (30d) / $30 (100d)",
+                rxTier3: "33% coinsurance",
+                rxTier4: "44% coinsurance",
+                highlights: "Part B reduction $55/mo ($660/yr savings)"
+            },
+            {
+                planName: "Humana Value Choice H5216-456 PPO",
+                planType: "PPO",
+                monthlyPremium: "$0 + $1 Part B reduction",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-3, $615 Tiers 4-5",
+                maxOOPInNetwork: "$5,800",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "Part B reduction, no Rx deductible Tiers 1-3"
+            },
+            {
+                planName: "Humana Value Choice H7617-032 PPO ⭐ RECOMMENDED",
+                planType: "PPO",
+                monthlyPremium: "$0 + $2 Part B reduction",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-3, $615 Tiers 4-5",
+                maxOOPInNetwork: "$5,800",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "BEST VALUE - $0 premium + $2 Part B reduction"
+            },
+            {
+                planName: "Humana Full Access H7617-025 PPO",
+                planType: "PPO",
+                monthlyPremium: "$29",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-3, $615 Tiers 4-5",
+                maxOOPInNetwork: "$5,500",
+                maxOOPOutNetwork: "$5,500",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$10",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "Same in/out OOP max, $10 specialist copay"
+            },
+            {
+                planName: "HumanaChoice H5216-048 PPO",
+                planType: "PPO",
+                monthlyPremium: "$49",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-2, $615 Tiers 3-5",
+                maxOOPInNetwork: "$5,500",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "$49 premium, good OOP max"
+            },
+            {
+                planName: "HumanaChoice H7617-016 PPO",
+                planType: "PPO",
+                monthlyPremium: "$79",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-2, $615 Tiers 3-5",
+                maxOOPInNetwork: "$5,500",
+                maxOOPOutNetwork: "$8,950",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "$79 premium, comprehensive coverage"
+            },
+            {
+                planName: "Humana Essentials Plus Giveback H5216-430 PPO",
+                planType: "PPO",
+                monthlyPremium: "$0 + $77 Part B reduction",
+                medicalDeductible: "$180 combined",
+                rxDeductible: "$0 Tiers 1-2, $615 Tiers 3-5",
+                maxOOPInNetwork: "$5,495",
+                maxOOPOutNetwork: "$9,450",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "HUGE Part B reduction $77/mo ($924/yr!)"
+            },
+            {
+                planName: "Humana Total Complete H2486-003 HMO",
+                planType: "HMO",
+                monthlyPremium: "$0 + $1 Part B reduction",
+                medicalDeductible: "$190 in-network",
+                rxDeductible: "$0 Tiers 1-2, $200 Tiers 3-5",
+                maxOOPInNetwork: "$5,000",
+                maxOOPOutNetwork: "N/A",
+                inpatientHospital: "$395/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$40",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $100 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "HMO, $190 deductible, low Rx deductible"
+            },
+            {
+                planName: "HealthSpring Cigna Premier HMO-POS (H0439-024) ⭐ RECOMMENDED",
+                planType: "HMO-POS",
+                monthlyPremium: "$0",
+                medicalDeductible: "$0",
+                rxDeductible: "$0 Tiers 1-2, $200 Tiers 3-5",
+                maxOOPInNetwork: "$3,500",
+                maxOOPOutNetwork: "Not covered",
+                inpatientHospital: "$300/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$10",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$300",
+                asc: "$0 colonoscopy, $150 other",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "$0",
+                rxTier2: "$5 (30d) / $15 (100d)",
+                rxTier3: "$47 (30d) / $141 (100d)",
+                rxTier4: "38% coinsurance",
+                highlights: "LOWEST OOP MAX $3,500! $10 specialist copay"
+            },
+            {
+                planName: "Regence MedAdvantage + Rx Enhanced PPO",
+                planType: "PPO",
+                monthlyPremium: "$135",
+                medicalDeductible: "$0",
+                rxDeductible: "Varies",
+                maxOOPInNetwork: "$5,000",
+                maxOOPOutNetwork: "$9,550",
+                inpatientHospital: "$310/day 1-5, $0 days 6+",
+                primaryCare: "$0",
+                specialist: "$30",
+                emergencyCare: "$130",
+                urgentCare: "$50",
+                ambulance: "$280",
+                asc: "$250",
+                snf: "$0/day 1-20, $218/day 21-100",
+                rxTier1: "Varies",
+                rxTier2: "Varies",
+                rxTier3: "Varies",
+                rxTier4: "Varies",
+                highlights: "High premium $135, comprehensive coverage"
+            }
+        ];
+
+        function renderTable() {
+            const tbody = document.getElementById('planTableBody');
+            plans.forEach(plan => {
+                const row = document.createElement('tr');
+                if (plan.isCurrent) {
+                    row.className = 'current-plan';
+                }
+                
+                const typeClass = plan.planType === 'PPO' ? 'ppo' : 
+                                 plan.planType === 'HMO' ? 'hmo' : 'hmo-pos';
+                
+                row.innerHTML = `
+                    <td>${plan.isCurrent ? '<span class="badge">2025 CURRENT</span>' : ''}${plan.planName}</td>
+                    <td><span class="plan-type ${typeClass}">${plan.planType}</span></td>
+                    <td>${plan.monthlyPremium}</td>
+                    <td>${plan.medicalDeductible}</td>
+                    <td>${plan.rxDeductible}</td>
+                    <td>${plan.maxOOPInNetwork}</td>
+                    <td>${plan.maxOOPOutNetwork}</td>
+                    <td>${plan.inpatientHospital}</td>
+                    <td>${plan.primaryCare}</td>
+                    <td>${plan.specialist}</td>
+                    <td>${plan.emergencyCare}</td>
+                    <td>${plan.urgentCare}</td>
+                    <td>${plan.ambulance}</td>
+                    <td>${plan.asc}</td>
+                    <td>${plan.snf}</td>
+                    <td>${plan.rxTier1}</td>
+                    <td>${plan.rxTier2}</td>
+                    <td>${plan.rxTier3}</td>
+                    <td>${plan.rxTier4}</td>
+                    <td>${plan.highlights}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function downloadCSV() {
+            const headers = [
+                'Plan Name', 'Plan Type', 'Monthly Premium', 'Medical Deductible', 'Rx Deductible',
+                'Max OOP In-Network', 'Max OOP Out-Network', 'Inpatient Hospital', 'Primary Care',
+                'Specialist', 'Emergency Care', 'Urgent Care', 'Ambulance', 'ASC Surgery', 'SNF',
+                'Rx Tier 1', 'Rx Tier 2', 'Rx Tier 3', 'Rx Tier 4', 'Key Highlights'
+            ];
+            
+            const rows = plans.map(plan => [
+                plan.planName,
+                plan.planType,
+                plan.monthlyPremium,
+                plan.medicalDeductible,
+                plan.rxDeductible,
+                plan.maxOOPInNetwork,
+                plan.maxOOPOutNetwork,
+                plan.inpatientHospital,
+                plan.primaryCare,
+                plan.specialist,
+                plan.emergencyCare,
+                plan.urgentCare,
+                plan.ambulance,
+                plan.asc,
+                plan.snf,
+                plan.rxTier1,
+                plan.rxTier2,
+                plan.rxTier3,
+                plan.rxTier4,
+                plan.highlights
+            ]);
+            
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'Medicare_Plan_Comparison_2025_vs_2026.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Render table on page load
+        renderTable();
+    </script>
+</body>
+</html>
