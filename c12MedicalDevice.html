@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedTech VitalMonitor Pro - Patient Vital Signs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .device-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .device-header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            padding: 20px;
+            border-bottom: 3px solid #00d4ff;
+        }
+
+        .device-title {
+            color: #00d4ff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .device-subtitle {
+            color: #8899aa;
+            font-size: 14px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #16213e;
+            border-bottom: 1px solid #2a3f5f;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .panel {
+            background: #0f3460;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .panel-title {
+            color: #00d4ff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a3f5f;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #8899aa;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a2e;
+            border: 1px solid #2a3f5f;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        .vitals-display {
+            grid-column: 1 / -1;
+        }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .vital-card {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .vital-label {
+            color: #8899aa;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .vital-value {
+            color: #00ff88;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .vital-unit {
+            color: #8899aa;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .error-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-modal.show {
+            display: flex;
+        }
+
+        .error-content {
+            background: #1a1a2e;
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .error-header {
+            background: #ff4444;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .error-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .error-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            width: auto;
+            padding: 0;
+        }
+
+        .error-body {
+            padding: 20px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .error-code {
+            background: #0f3460;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ff4444;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .timestamp {
+            color: #8899aa;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .locked-feature {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="device-container">
+        <div class="device-header">
+            <div class="device-title">MedTech VitalMonitor Pro</div>
+            <div class="device-subtitle">Patient Vital Signs Monitoring System v3.2.1</div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>System Online</span>
+            </div>
+            <div class="status-indicator">
+                <span>Network: Connected | Device ID: VM-304-A</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="panel">
+                <div class="panel-title">Patient Selection</div>
+                <div class="form-group">
+                    <label for="patientId">Patient ID / Name</label>
+                    <input type="text" id="patientId" placeholder="Enter patient ID or name">
+                </div>
+                <div class="form-group">
+                    <label for="timeRange">Time Range</label>
+                    <select id="timeRange">
+                        <option value="1hr">Last 1 Hour</option>
+                        <option value="4hr">Last 4 Hours</option>
+                        <option value="8hr">Last 8 Hours</option>
+                        <option value="24hr">Last 24 Hours</option>
+                    </select>
+                </div>
+                <button onclick="loadPatientData()">Load Patient Data</button>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Data Management</div>
+                <div class="form-group">
+                    <label for="exportFile">Export Filename</label>
+                    <input type="text" id="exportFile" placeholder="patient_vitals_export.csv">
+                </div>
+                <button onclick="exportData()" style="margin-bottom: 10px;">Export Vital Signs</button>
+                <button onclick="calibrateDevice()" class="button-secondary">Calibration Mode</button>
+                <button onclick="adminAccess()" class="button-secondary locked-feature" style="margin-top: 10px;">Admin Settings 🔒</button>
+            </div>
+
+            <div class="panel vitals-display">
+                <div class="panel-title">Current Vital Signs - Room 304</div>
+                <div class="vitals-grid">
+                    <div class="vital-card">
+                        <div class="vital-label">Heart Rate</div>
+                        <div class="vital-value">78<span class="vital-unit">bpm</span></div>
+                    </div>
+                    <div class="vital-card">
+                        <div class="vital-label">Blood Pressure</div>
+                        <div class="vital-value">120/80<span class="vital-unit">mmHg</span></div>
+                    </div>
+                    <div class="vital-card">
+                        <div class="vital-label">Oxygen Saturation</div>
+                        <div class="vital-value">98<span class="vital-unit">%</span></div>
+                    </div>
+                    <div class="vital-card">
+                        <div class="vital-label">Temperature</div>
+                        <div class="vital-value">98.6<span class="vital-unit">°F</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorModal" class="error-modal">
+        <div class="error-content">
+            <div class="error-header">
+                <div class="error-title">⚠️ System Error</div>
+                <button class="error-close" onclick="closeError()">×</button>
+            </div>
+            <div class="error-body" id="errorBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let discoveredSegments = new Set();
+        const segments = {
+            database: 'FLAG{DB_3XP0',
+            filesystem: '5ED_V14_3RR',
+            memory: '0R_M3SS4G3S}',
+            network: 'HINT_COMBINE_ALL'
+        };
+
+        function showError(type, message) {
+            const modal = document.getElementById('errorModal');
+            const errorBody = document.getElementById('errorBody');
+            const timestamp = new Date().toISOString();
+            
+            errorBody.innerHTML = message + `<div class="timestamp">Timestamp: ${timestamp}</div>`;
+            modal.classList.add('show');
+            
+            if (segments[type]) {
+                discoveredSegments.add(type);
+                checkCompletion();
+            }
+        }
+
+        function closeError() {
+            document.getElementById('errorModal').classList.remove('show');
+        }
+
+        function checkCompletion() {
+            if (discoveredSegments.size >= 3) {
+                console.log('%c🎉 FLAG DISCOVERED! 🎉', 'color: #00ff88; font-size: 20px; font-weight: bold;');
+                console.log('%cCombine the segments in order:', 'color: #00d4ff; font-size: 14px;');
+                console.log('%c' + segments.database + segments.filesystem + segments.memory, 'color: #fff; font-size: 16px; font-family: monospace;');
+            }
+        }
+
+        function loadPatientData() {
+            const patientId = document.getElementById('patientId').value;
+            const timeRange = document.getElementById('timeRange').value;
+            
+            // SQL Injection Detection
+            if (patientId.toLowerCase().includes('drop table') || 
+                patientId.includes("'") || 
+                patientId.includes('--') ||
+                patientId.toLowerCase().includes('union') ||
+                patientId.includes(';')) {
+                
+                showError('database', `
+                    <strong>Database Error Code: ERR_SQL_SYNTAX_001</strong>
+                    <div class="error-code">ERROR: Invalid SQL syntax detected in patient lookup query
+
+Database Connection Details:
+  Server: mysql://monitor_user:Med1c4l_P@55@db-server-01.hospital.local:3306/patient_vitals
+  Schema: patient_vitals
+  Table: vital_readings
+  Last Query: SELECT * FROM patients WHERE patient_id='${patientId.substring(0, 50)}...'
+  
+Query Parser Error at position 47: Unexpected token ';'
+Stack Trace:
+  at QueryBuilder.execute (vital_monitor.js:1847)
+  at DatabaseHandler.fetchPatientData (data_handler.js:203)
+  at PatientController.loadData (controller.js:445)
+
+Flag Segment 1/3: ${segments.database}</div>
+
+<strong>Recommendation:</strong> Input sanitization required. Refer to OWASP guidelines for SQL injection prevention.
+                `);
+                return;
+            }
+
+            // Network timeout for specific combination
+            if (timeRange === '24hr' && (patientId === '999999' || patientId.toLowerCase() === 'test' || patientId === '0')) {
+                showError('network', `
+                    <strong>Network Communication Error: ERR_NET_TIMEOUT_504</strong>
+                    <div class="error-code">ERROR: Connection timeout while fetching historical data
+
+Network Configuration:
+  Primary Data Server: 192.168.100.15:8443 (TIMEOUT after 30 seconds)
+  Backup Data Server: 192.168.100.16:8443 (UNREACHABLE)
+  Local Device IP: 10.0.2.100/24
+  Gateway: 10.0.2.1
+  DNS Servers: 10.0.2.2, 8.8.8.8
+  Network Interface: eth0 (status: UP)
+  
+Connection Attempts:
+  [2025-10-11 14:23:15] Attempting connection to 192.168.100.15:8443...
+  [2025-10-11 14:23:45] Connection timeout (30s exceeded)
+  [2025-10-11 14:23:46] Failover to backup server 192.168.100.16:8443...
+  [2025-10-11 14:23:47] Backup server unreachable (no route to host)
+
+ASSEMBLY HINT: Combine all flag segments in order of discovery
+Discovered segments: ${discoveredSegments.size}/3</div>
+
+<strong>Action Required:</strong> Contact network administrator to verify data server connectivity.
+                `);
+                return;
+            }
+
+            // Buffer overflow for long input
+            if (patientId.length > 256) {
+                showError('memory', `
+                    <strong>Memory Allocation Error: ERR_BUFFER_OVERFLOW_001</strong>
+                    <div class="error-code">CRITICAL: Buffer overflow detected in patient_name input field
+
+Memory Diagnostic Information:
+  Input Buffer Size: 256 bytes (allocated)
+  Input Received: ${patientId.length} bytes
+  Overflow: ${patientId.length - 256} bytes beyond buffer boundary
+  
+Stack Trace:
+  Exception at address: 0x00007FF6D4B21A47
+  vital_monitor.exe!process_patient_data() [Line 1243]
+  vital_monitor.exe!validate_input() [Line 892]
+  vital_monitor.exe!main() [Line 445]
+
+Debug Information:
+  Module: vital_monitor.exe v3.2.1
+  Build: 2024-08-15 10:23:44 UTC
+  Debug Symbols: C:\\Program Files\\MedTech\\VitalMonitor\\debug\\symbols.pdb
+  Compiler: MSVC 19.29.30133
+  
+Memory Dump (first 64 bytes of overflow):
+  ${patientId.substring(256, 320)}...
+
+Flag Segment 3/3: ${segments.memory}</div>
+
+<strong>Security Alert:</strong> This vulnerability could be exploited for arbitrary code execution. Immediate patching recommended.
+                `);
+                return;
+            }
+
+            // Normal operation
+            alert('Patient data loaded successfully for: ' + (patientId || 'Current Patient'));
+        }
+
+        function exportData() {
+            const filename = document.getElementById('exportFile').value;
+            
+            // Path traversal detection
+            if (filename.includes('..') || 
+                filename.includes('/etc/') || 
+                filename.includes('\\windows\\') ||
+                filename.toLowerCase().includes('passwd') ||
+                filename.includes('system32')) {
+                
+                showError('filesystem', `
+                    <strong>File System Security Error: ERR_PATH_TRAVERSAL_403</strong>
+                    <div class="error-code">ERROR: Unauthorized file system access attempt detected
+
+File System Details:
+  Requested Path: ${filename}
+  Resolved Path: /opt/meddev/vital_monitor/exports/${filename}
+  Normalized Path: ${filename.includes('..') ? '/opt/meddev/exports/../../../' + filename.split('..')[filename.split('..').length-1] : '/opt/meddev/vital_monitor/exports/' + filename}
+  
+Security Violation:
+  Type: Path Traversal Attack (Directory Climbing)
+  Risk Level: HIGH
+  Action: Request BLOCKED
+
+System Paths (Read-Only):
+  Application Root: /opt/meddev/vital_monitor/
+  Export Directory: /opt/meddev/vital_monitor/exports/
+  Config Directory: /opt/meddev/vital_monitor/config/
+  Log File: /var/log/meddev/vital_monitor.log
+  Database Config: /opt/meddev/vital_monitor/config/db_connection.ini
+
+Flag Segment 2/3: ${segments.filesystem}</div>
+
+<strong>Incident Logged:</strong> Security event recorded to audit log for review.
+                `);
+                return;
+            }
+
+            // Normal export
+            alert('Data exported successfully to: ' + (filename || 'patient_vitals_export.csv'));
+        }
+
+        function calibrateDevice() {
+            alert('Calibration Mode: Requires technician authentication\n\nPlease contact MedTech Support at 1-800-MEDTECH for calibration procedures.');
+        }
+
+        function adminAccess() {
+            const username = prompt('Administrator Username:');
+            if (!username) return;
+            
+            const password = prompt('Administrator Password:');
+            if (!password) return;
+            
+            showError('auth', `
+                <strong>Authentication Failure: ERR_AUTH_DENIED_401</strong>
+                <div class="error-code">ERROR: Invalid credentials for administrative access
+
+Authentication Details:
+  Username: ${username}
+  Authentication Method: LDAP
+  LDAP Server: dc-01.hospital.local:389
+  Base DN: DC=hospital,DC=local
+  Service Account: CN=meddev_svc,OU=ServiceAccounts,DC=hospital,DC=local
+  
+Login Attempt Log:
+  Timestamp: ${new Date().toISOString()}
+  Source IP: 10.0.2.100
+  User Agent: VitalMonitor/3.2.1
+  Result: FAILED (Invalid credentials)
+  
+Failed Login Count for '${username}': 1
+Account Lockout Threshold: 5 attempts
+
+Last Successful Admin Login:
+  User: admin
+  Timestamp: 2024-10-15 14:23:07 UTC
+  Source: 10.0.2.50</div>
+
+<strong>Security Notice:</strong> Failed authentication attempts are logged and monitored. Multiple failures may result in account lockout.
+
+<strong>HINT:</strong> Look for patterns across all error messages. Some contain segments of a larger flag.
+            `);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('errorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeError();
+            }
+        });
+
+        // Console hints for participants
+        console.log('%c🏥 MedTech VitalMonitor Pro - Debug Console', 'color: #00d4ff; font-size: 16px; font-weight: bold;');
+        console.log('%cHint: Medical devices often reveal sensitive information through error messages...', 'color: #8899aa; font-size: 12px;');
+        console.log('%cTry different inputs to trigger various error conditions.', 'color: #8899aa; font-size: 12px;');
+    </script>
+</body>
+</html>
