@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Brain Sheet - Telemetry Unit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica';
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fffef7;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background-image: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 31px,
+                    #e5e5e5 31px,
+                    #e5e5e5 32px
+                );
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            background: white;
+            margin: -30px -30px 20px -30px;
+            padding: 20px 30px;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .header h1 {
+            font-family: 'Helvetica';
+            font-size: 32px;
+            color: #2c5aa0;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .header .subtitle {
+            font-size: 18px;
+            color: #555;
+            font-weight: 400;
+        }
+        
+        .sbar-section {
+            margin: 25px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.7);
+            border-left: 5px solid #2c5aa0;
+            border-radius: 4px;
+        }
+        
+        .sbar-letter {
+            display: inline-block;
+            background: #2c5aa0;
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 10px;
+            font-family: 'Helvetica';
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c5aa0;
+            margin-bottom: 15px;
+            font-family: 'Helvetica';
+        }
+        
+        .info-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 32px;
+        }
+        
+        .info-item {
+            padding: 5px 0;
+        }
+        
+        .label {
+            font-weight: 700;
+            color: #333;
+            font-family: 'Helvetica';
+        }
+        
+        .value {
+            color: #1a1a1a;
+            margin-left: 5px;
+            font-family: 'Kalam', cursive;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        
+        .lab-item {
+            background: rgba(255,255,255,0.8);
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .medications {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 4px;
+            font-size: 15px;
+            line-height: 28px;
+        }
+        
+        .medications li {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .handwritten-note {
+            background: #ffffcc;
+            border: 2px dashed #999;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+            line-height: 1.6;
+            transform: rotate(-0.5deg);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .alert-box {
+            background: #ffebee;
+            border-left: 5px solid #c62828;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .encoded {
+            background: #fff9c4;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #d32f2f;
+        }
+        
+        .checkmark {
+            color: #2e7d32;
+            font-weight: 700;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NURSE BRAIN SHEET - TELEMETRY UNIT</h1>
+            <div class="subtitle">SBAR Format | SaintCon Hospital</div>
+        </div>
+
+        <!-- SITUATION -->
+        <div class="sbar-section">
+            <div class="section-title">
+                <span class="sbar-letter">S</span>SITUATION
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">Patient name:</span>
+                    <span class="value">Elizabeth Hartwell</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Age:</span>
+                    <span class="value">67</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Room number:</span>
+                    <span class="value">304</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Admit date:</span>
+                    <span class="value">10/21/2025</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">1 Dx:</span>
+                    <span class="value">Post-operative cardiac monitoring</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">2 Dx:</span>
+                    <span class="value">Hypertension, Type 2 Diabetes</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">C/O:</span>
+                    <span class="value">Chest discomfort, intermittent</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Allergies:</span>
+                    <span class="value">Penicillin, Shellfish</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Physician:</span>
+                    <span class="value">Dr. Reynolds</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Attending:</span>
+                    <span class="value">Dr. Sarah Chen</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Consultants:</span>
+                    <span class="value">Cardiology (Dr. Martinez)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Pgr/#:</span>
+                    <span class="value">670-6767</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Code status:</span>
+                    <span class="value">Full Code</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Advanced directive on chart?</span>
+                    <span class="value">Yes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACKGROUND -->
+        <div class="sbar-section">
+            <div class="section-title">
+                <span class="sbar-letter">B</span>BACKGROUND
+            </div>
+            <div class="info-row">
+                <div class="info-item full-width">
+                    <span class="label">History:</span>
+                    <span class="value">CAD, HTN, DM2, Previous MI (2023)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Surgery:</span>
+                    <span class="value">CABG x3</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Surgeon:</span>
+                    <span class="value">Dr. Thompson</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Anesthesia:</span>
+                    <span class="value">General</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Anesthesiologist:</span>
+                    <span class="value">Dr. Kumar</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">EBL:</span>
+                    <span class="value">400ml</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Isolation:</span>
+                    <span class="value">None</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Core Measures:</span>
+                    <span class="value">CHF, MI</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="label">Restraints:</span>
+                    <span class="value">None</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="label">Fall risk:</span>
+                    <span class="value">Moderate</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Vaccine PNA Flu:</span>
+                    <span class="value">UTD</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ASSESSMENT -->
+        <div class="sbar-section">
+            <div class="section-title">
+                <span class="sbar-letter">A</span>ASSESSMENT
+            </div>
+            
+            <div class="info-item full-width" style="margin: 10px 0;">
+                <span class="label">Cardiac:</span>
+                <span class="value">BP 138/82, HR 76 regular, Peripheral pulses 2+ bilateral, No edema, Heart sounds clear</span>
+            </div>
+            
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">Current rhythm:</span>
+                    <span class="value">NSR</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Daily wt?:</span>
+                    <span class="value">Yes - 68.2kg (stable)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">DVT prophylaxis:</span>
+                    <span class="value">Heparin 5000u SQ q12h</span>
+                </div>
+            </div>
+
+            <div class="info-row" style="margin-top: 15px;">
+                <div class="info-item">
+                    <span class="label">Pain/sedation:</span>
+                    <span class="value">10/20 incisional pain</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Pain scale:</span>
+                    <span class="value">0-10 numeric</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Location:</span>
+                    <span class="value">Chest incision</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Meds type and last dose:</span>
+                    <span class="value">Morphine 2mg IV @ 0400h</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Pulmonary:</span>
+                    <span class="value">Breath sounds clear bilaterally, minimal secretions, SpO2 96% on RA</span>
+                </div>
+            </div>
+
+            
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">Vent/bipap etc:</span>
+                    <span class="value">Room air</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Settings:</span>
+                    <span class="value">N/A</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Accu checks:</span>
+                    <span class="value">QID</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">A1C:</span>
+                    <span class="value">7.2%</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Frequency:</span>
+                    <span class="value">Before meals & HS</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Last Results:</span>
+                    <span class="value">142 (0600h)</span>
+                </div>
+            </div>
+
+            <div class="info-row" style="margin-top: 15px;">
+                <div class="info-item">
+                    <span class="label">GI:</span>
+                    <span class="value">Active bowel sounds</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">NG/OGT:</span>
+                    <span class="value">None</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">BS:</span>
+                    <span class="value">Present x4</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Last BM:</span>
+                    <span class="value">10/21 evening</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Diet:</span>
+                    <span class="value">Cardiac, diabetic</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">GI Prophylaxis:</span>
+                    <span class="value">Pantoprazole 40mg daily</span>
+                </div>
+            </div>
+
+            <div class="info-row" style="margin-top: 15px;">
+                <div class="info-item">
+                    <span class="label">GU:</span>
+                    <span class="value">Foley inserted 10/21</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Foley/void:</span>
+                    <span class="value">Foley catheter</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Output:</span>
+                    <span class="value">1200ml (adequate, clear yellow)</span>
+                </div>
+            </div>
+
+            <div class="info-item full-width" style="margin: 15px 0 10px 0;">
+                <span class="label">Skin/Wounds/Drainage:</span>
+                <span class="value">Midline sternotomy incision - clean, dry, intact. No erythema or drainage</span>
+            </div>
+
+            <div class="info-row">
+                <div class="info-item">
+                    <span class="label">Staples:</span>
+                    <span class="value">Present</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Drains:</span>
+                    <span class="value">Chest tube removed 10/21</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Location:</span>
+                    <span class="value">Anterior chest</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Ducub photo on admission:</span>
+                    <span class="value">Yes</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">IV:</span>
+                    <span class="value">Right forearm 20g</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Date inserted:</span>
+                    <span class="value">10/21/2025</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Fluids:</span>
+                    <span class="value">NS @ 75ml/hr</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Gtts:</span>
+                    <span class="value">None currently</span>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <span class="label">Psych Social:</span>
+                <span class="value">RGV2aWNlIHRhbXBlcmluZyBzdXNwZWN0ZWQgLSBJVCBub3RpZmllZA</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Pending orders:</span>
+                <span class="value">Hahfhny argjbex npgvivgl ba cngvrag zbavgbe</span>
+            </div>
+
+            <!-- MEDICATIONS -->
+            <div class="medications">
+                <div class="label" style="font-size: 18px; margin-bottom: 10px;">MEDICATIONS:</div>
+                <ul>
+                    <li>Metoprolol 25mg PO BID</li>
+                    <li>Lisinopril 10mg PO daily</li>
+                    <li>Atorvastatin 80mg PO HS</li>
+                    <li>Aspirin 81mg PO daily</li>
+                    <li>Insulin sliding scale per protocol</li>
+                    <li>Morphine 2-4mg IV q4h PRN pain</li>
+                    <li>Pantoprazole 40mg PO daily</li>
+                    <li>Heparin 5000u SQ q12h</li>
+                </ul>
+                
+            </div>
+
+            <!-- LAB VALUES -->
+            <div style="margin-top: 20px;">
+                <div class="label" style="font-size: 18px; margin-bottom: 10px;">LAB VALUES:</div>
+                <div class="lab-grid">
+                    <div class="lab-item"><span class="label">Na:</span> 138</div>
+                    <div class="lab-item"><span class="label">Cl:</span> 102</div>
+                    <div class="lab-item"><span class="label">Bun:</span> 18</div>
+                    <div class="lab-item"><span class="label">gluc:</span> 142</div>
+                    <div class="lab-item"><span class="label">mg:</span> 2.1</div>
+                    <div class="lab-item"><span class="label">BNP:</span> 95</div>
+                    <div class="lab-item"><span class="label">K:</span> 4.2</div>
+                    <div class="lab-item"><span class="label">CO₂:</span> 24</div>
+                    <div class="lab-item"><span class="label">Cr:</span> 0.9</div>
+                    <div class="lab-item"><span class="label">Ca:</span> 9.4</div>
+                    <div class="lab-item"><span class="label">Phos:</span> 3.6</div>
+                    <div class="lab-item"><span class="label">DDimer:</span> Neg</div>
+                    <div class="lab-item"><span class="label">Coags:</span> INR 1.1, PTT 32</div>
+                    <div class="lab-item"><span class="label">Cardiac enz:</span> 1: <span class="checkmark">✓</span> 2: <span class="checkmark">✓</span> 3: Pending</div>
+                    <div class="lab-item"><span class="label">Hct:</span> 36% | <span class="label">W:</span> 9.2 | <span class="label">Pl:</span> 245 | <span class="label">Hgb:</span> 12.1</div>
+                    <div class="lab-item"><span class="label">Next lab:</span> Cardiac panel @ 1200h</div>
+                    <div class="lab-item"><span class="label">UA:</span> Pending</div>
+                    <div class="lab-item"><span class="label">CT:</span> N/A</div>
+                    <div class="lab-item"><span class="label">CXR:</span> 10/21 - Clear, no infiltrates</div>
+                    <div class="lab-item"><span class="label">MRI:</span> N/A</div>
+                    <div class="lab-item"><span class="label">Echo:</span> 10/20 - EF 45%</div>
+                    <div class="lab-item"><span class="label">Cultures:</span> None</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECOMMENDATION -->
+        <div class="sbar-section">
+            <div class="section-title">
+                <span class="sbar-letter">R</span>RECOMMENDATION
+            </div>
+            <div class="info-row">
+                <div class="info-item full-width">
+                    <span class="label">DC Plan. Is pt informed of plan:</span>
+                    <span class="value">Yes - anticipate d/c 10/22 if stable</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="label">24 hour orders reviewed:</span>
+                    <span class="value checkmark">✓</span>
+                </div>
+                <div class="info-item full-width">
+                    <span class="label">Shift goals:</span>
+                    <span class="value">Rzcyblrr ahzore bar gjb mreb svir frra npprffvat qrivpr</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
