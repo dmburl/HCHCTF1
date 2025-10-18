@@ -1,0 +1,32 @@
+### 4. `hl7_reference.txt`
+```
+HL7 MESSAGE STRUCTURE QUICK REFERENCE
+====================================
+
+Common Segments:
+- MSH: Message Header
+- PID: Patient Identification
+- PV1: Patient Visit
+- OBR: Observation Request
+- OBX: Observation Result
+
+Field Separator: |
+Component Separator: ^
+Repetition Separator: ~
+Escape Character: \
+Subcomponent Separator: &
+
+PV1 Segment Format:
+PV1|SetID|PatientClass|AssignedPatientLocation|AdmissionType|...
+
+AssignedPatientLocation format:
+PointOfCare^Room^Bed^Facility^LocationStatus^PersonLocationType
+
+Example:
+PV1|1|I|304^A^01
+     |   | |
+     |   | +-- Bed
+     |   +----- Room  
+     +--------- Point of Care
+
+For this CTF: Focus on the Room field (field 3, component 1)
