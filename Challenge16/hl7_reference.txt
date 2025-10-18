@@ -1,5 +1,3 @@
-### 4. `hl7_reference.txt`
-```
 HL7 MESSAGE STRUCTURE QUICK REFERENCE
 ====================================
 
