@@ -93,7 +93,7 @@
     <div class="section">
         <h2>TARGET SYSTEM</h2>
         <pre>
-HOST: <span class="yellow">[YOUR_SERVER_IP]</span>
+HOST: <span class="yellow">172.184.215.224</span>
 PORT: <span class="yellow">2575</span> (Standard HL7 MLLP port)
 PROTOCOL: HL7 v2.5
 STATUS: <span class="red">VULNERABLE</span>
@@ -102,33 +102,10 @@ STATUS: <span class="red">VULNERABLE</span>
 
     <div class="section">
         <h2>DOWNLOAD CHALLENGE FILES</h2>
-        <a href="sample_hl7_message.txt" class="download-btn" download>📄 Sample HL7 Message</a>
         <a href="hl7_exploit_template.py" class="download-btn" download>🐍 Exploit Template</a>
+        <!--<a href="sample_hl7_message.txt" class="download-btn" download>📄 Sample HL7 Message</a>
         <a href="hl7_reference.txt" class="download-btn" download>📚 HL7 Reference</a>
-        <a href="challenge_brief.txt" class="download-btn" download>📋 Challenge Brief</a>
-    </div>
-
-    <div class="section">
-        <h2>HINTS</h2>
-        <details>
-            <summary class="blue">Click for Hint 1</summary>
-            <p>HL7 messages use pipe (|) characters as field delimiters. The PV1 segment contains patient visit information including room location.</p>
-        </details>
-        
-        <details>
-            <summary class="blue">Click for Hint 2</summary>
-            <p>Look for unsafe string evaluation or execution in how the server validates room numbers. Python's eval() function is particularly dangerous.</p>
-        </details>
-        
-        <details>
-            <summary class="blue">Click for Hint 3</summary>
-            <p>You can break out of string context in eval() by using quotes. Think about: eval(f"'{user_input}' in valid_rooms")</p>
-        </details>
-        
-        <details>
-            <summary class="blue">Click for Hint 4</summary>
-            <p>The flag is stored in the handler's memory. Can you execute code to print or access it?</p>
-        </details>
+        <a href="challenge_brief.txt" class="download-btn" download>📋 Challenge Brief</a>-->
     </div>
 
     <div class="section">
@@ -145,18 +122,11 @@ STATUS: <span class="red">VULNERABLE</span>
         <h2>QUICK START</h2>
         <pre>
 # Test connection
-telnet [YOUR_SERVER_IP] 2575
+telnet 172.184.215.224 2575
 
 # Or use Python
 python3 hl7_exploit_template.py
         </pre>
-    </div>
-
-    <div class="section">
-        <h2>SUBMIT FLAG</h2>
-        <p>Once you've successfully exploited the handler, submit your flag in the format:</p>
-        <pre class="yellow">CTF{...}</pre>
-        <p><a href="../submit.html">Submit Flag Here</a></p>
     </div>
 
     <div class="section">
@@ -168,21 +138,5 @@ python3 hl7_exploit_template.py
             <li>Healthcare-specific attack vectors and their impact on patient safety</li>
         </ul>
     </div>
-
-    <div class="header">
-        <p class="yellow">Previous Challenge:</p>
-        <p><a href="../dicom-manipulation/">Challenge 15: The Encrypted Notes</a></p>
-        <p class="yellow">Next Challenge:</p>
-        <p><a href="../mqtt-telemetry/">Challenge 17: The Telemetry Leak</a></p>
-    </div>
 </body>
 </html>
-```
-
-**Create the downloadable files:**
-
-`challenges/hl7-exploit/sample_hl7_message.txt`:
-```
-MSH|^~\&|HIS|SAINTCON|LAB|SAINTCON|20251021143000||ADT^A01|MSG00001|P|2.5
-PID|1||VIP-7741||HARTWELL^ELIZABETH||19620315|F
-PV1|1|I|304^A^01
