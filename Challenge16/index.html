@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 16: The HL7 Exploit - SaintCon Hospital CTF</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            border: 2px solid #00ff00;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #1a1a1a;
+        }
+        .section {
+            border: 1px solid #00ff00;
+            padding: 15px;
+            margin: 15px 0;
+            background: #0f0f0f;
+        }
+        .red { color: #ff0000; }
+        .yellow { color: #ffff00; }
+        .blue { color: #00ffff; }
+        pre {
+            background: #000;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #00ff00;
+            color: #000;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CHALLENGE 16: THE HL7 EXPLOIT</h1>
+        <p class="yellow">SaintCon Hospital - Digital Forensics Investigation</p>
+        <p>Phase 7: System Integration Attacks</p>
+    </div>
+
+    <div class="section">
+        <h2 class="red">⚠️ CRITICAL ALERT ⚠️</h2>
+        <p><strong>Investigation Log - Day 4, 14:30</strong></p>
+        <p>Following the DICOM investigation of Elizabeth Hartwell's records, network monitoring has detected <span class="red">weaponized HL7 messages</span> targeting patient care coordination systems.</p>
+        
+        <p>The attacker is exploiting healthcare communication protocols to spread laterally through interconnected departments. Every system that processes these malformed messages becomes a potential entry point.</p>
+        
+        <p><strong class="blue">Patient of Interest:</strong></p>
+        <ul>
+            <li>Name: Elizabeth Hartwell</li>
+            <li>DOB: 03/15/1962</li>
+            <li>MRN: VIP-7741</li>
+            <li>Room: 304</li>
+            <li>Admission: 10/21/2025</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>MISSION OBJECTIVE</h2>
+        <p>A suspicious HL7 message handler has been isolated that accepts ADT (Admission, Discharge, Transfer) messages. Your task:</p>
+        <ol>
+            <li>Connect to the vulnerable HL7 handler</li>
+            <li>Analyze the message format</li>
+            <li>Exploit the handler to extract the flag</li>
+            <li>Understand the attack vector being used</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>TARGET SYSTEM</h2>
+        <pre>
+HOST: <span class="yellow">[YOUR_SERVER_IP]</span>
+PORT: <span class="yellow">2575</span> (Standard HL7 MLLP port)
+PROTOCOL: HL7 v2.5
+STATUS: <span class="red">VULNERABLE</span>
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>DOWNLOAD CHALLENGE FILES</h2>
+        <a href="sample_hl7_message.txt" class="download-btn" download>📄 Sample HL7 Message</a>
+        <a href="hl7_exploit_template.py" class="download-btn" download>🐍 Exploit Template</a>
+        <a href="hl7_reference.txt" class="download-btn" download>📚 HL7 Reference</a>
+        <a href="challenge_brief.txt" class="download-btn" download>📋 Challenge Brief</a>
+    </div>
+
+    <div class="section">
+        <h2>HINTS</h2>
+        <details>
+            <summary class="blue">Click for Hint 1</summary>
+            <p>HL7 messages use pipe (|) characters as field delimiters. The PV1 segment contains patient visit information including room location.</p>
+        </details>
+        
+        <details>
+            <summary class="blue">Click for Hint 2</summary>
+            <p>Look for unsafe string evaluation or execution in how the server validates room numbers. Python's eval() function is particularly dangerous.</p>
+        </details>
+        
+        <details>
+            <summary class="blue">Click for Hint 3</summary>
+            <p>You can break out of string context in eval() by using quotes. Think about: eval(f"'{user_input}' in valid_rooms")</p>
+        </details>
+        
+        <details>
+            <summary class="blue">Click for Hint 4</summary>
+            <p>The flag is stored in the handler's memory. Can you execute code to print or access it?</p>
+        </details>
+    </div>
+
+    <div class="section">
+        <h2>TOOLS YOU'LL NEED</h2>
+        <ul>
+            <li>Python 3 (for exploit script)</li>
+            <li>netcat or telnet (for testing connections)</li>
+            <li>Basic understanding of HL7 message structure</li>
+            <li>Knowledge of Python injection techniques</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>QUICK START</h2>
+        <pre>
+# Test connection
+telnet [YOUR_SERVER_IP] 2575
+
+# Or use Python
+python3 hl7_exploit_template.py
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>SUBMIT FLAG</h2>
+        <p>Once you've successfully exploited the handler, submit your flag in the format:</p>
+        <pre class="yellow">CTF{...}</pre>
+        <p><a href="../submit.html">Submit Flag Here</a></p>
+    </div>
+
+    <div class="section">
+        <h2 class="red">LEARNING OBJECTIVES</h2>
+        <ul>
+            <li>Understanding HL7 protocol structure and healthcare system integration</li>
+            <li>Recognizing dangerous eval() usage in production code</li>
+            <li>Exploiting input validation vulnerabilities</li>
+            <li>Healthcare-specific attack vectors and their impact on patient safety</li>
+        </ul>
+    </div>
+
+    <div class="header">
+        <p class="yellow">Previous Challenge:</p>
+        <p><a href="../dicom-manipulation/">Challenge 15: The Encrypted Notes</a></p>
+        <p class="yellow">Next Challenge:</p>
+        <p><a href="../mqtt-telemetry/">Challenge 17: The Telemetry Leak</a></p>
+    </div>
+</body>
+</html>
+```
+
+**Create the downloadable files:**
+
+`challenges/hl7-exploit/sample_hl7_message.txt`:
+```
+MSH|^~\&|HIS|SAINTCON|LAB|SAINTCON|20251021143000||ADT^A01|MSG00001|P|2.5
+PID|1||VIP-7741||HARTWELL^ELIZABETH||19620315|F
+PV1|1|I|304^A^01
