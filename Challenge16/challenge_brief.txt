@@ -1,5 +1,3 @@
-### 1. `challenge_brief.txt`
-```
 CHALLENGE 16: THE HL7 EXPLOIT
 =============================
 
@@ -16,7 +14,7 @@ Exploit the vulnerable HL7 message handler to extract the flag and understand
 the attack vector being used.
 
 TARGET:
-- HL7 Handler IP: [Your_CTF_Server_IP]
+- HL7 Handler IP: 172.184.215.224
 - Port: 2575 (standard HL7 port)
 - Patient of Interest: Elizabeth Hartwell (VIP-7741)
 
@@ -31,4 +29,4 @@ HINTS:
 4. The system processes messages related to Room 304
 5. Python's eval() function is dangerous when handling untrusted input
 
-SUBMIT: The flag in format CTF{...}
+SUBMIT: The flag in format FLAG{...}
