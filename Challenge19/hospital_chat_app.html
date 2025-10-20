@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureHealthChat™</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 667px;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .time {
+            font-weight: 600;
+        }
+
+        .indicators {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .chat-header {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .contact-status {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+
+        .security-badge {
+            background: #27ae60;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+
+        /* Debug overlay - "accidentally" left enabled */
+        .debug-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.85);
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            padding: 8px;
+            border-radius: 4px;
+            max-width: 90%;
+            z-index: 1000;
+            border: 1px solid #0f0;
+        }
+
+        .debug-line {
+            margin: 2px 0;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message.sent {
+            align-items: flex-end;
+        }
+
+        .message.received {
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .message.sent .message-bubble {
+            background: #3498db;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.received .message-bubble {
+            background: white;
+            color: #2c3e50;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #95a5a6;
+            margin-top: 4px;
+            padding: 0 5px;
+        }
+
+        .sender-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+            padding: 0 5px;
+        }
+
+        .input-area {
+            padding: 10px;
+            background: white;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .send-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .warning-banner {
+            background: #e74c3c;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Hidden flag in CSS comment */
+        /* DEBUG MODE: api.securehealthchat[.]fake/messages/unencrypted/ */
+        /* SESSION: FLAG{debug_mode_exposed_endpoint} */
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="phone-screen">
+            <div class="status-bar">
+                <div class="time">2:47 AM</div>
+                <div class="indicators">
+                    <span>📶</span>
+                    <span>📡</span>
+                    <span>🔋95%</span>
+                </div>
+            </div>
+
+            <div class="warning-banner">⚠️ Development Build - Not for Production Use</div>
+
+            <div class="chat-header">
+                <div class="back-button">←</div>
+                <div class="contact-info">
+                    <div class="contact-name">Saintcon Hosptial Team</div>
+                    <div class="contact-status">Dr. Sarah Chen, Marcus Webb • Online</div>
+                </div>
+                <div class="security-badge">
+                    🔒 Secure
+                </div>
+            </div>
+
+            <div class="messages-container">
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Hey Marcus, sorry to text so late. You still on shift? Need a second opinion on Mrs. Hartwell in 304.
+                    </div>
+                    <div class="message-time">2:23 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        no worries, just finishing rounds. what's going on with her?
+                    </div>
+                    <div class="message-time">2:24 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Her IV pump is showing weird readings. BP dropped to 95/60, but she seems stable. Telemetry looks off though. Can you check the monitor calibration?
+                    </div>
+                    <div class="message-time">2:25 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        on it. btw did you get a chance to review the MRI results for patient A4759? cardiology wants them by morning
+                    </div>
+                    <div class="message-time">2:27 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Yes! Finally got the DICOM images loaded. Had to request them twice - system kept timing out. Small nodule on the upper lobe, likely benign but scheduling follow-up in 3 months.
+                    </div>
+                    <div class="message-time">2:29 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        good catch. hey hartwell's pump settings look normal to me. maybe just sensor drift? also that vip patient from this morning is asking for stronger pain meds again
+                    </div>
+                    <div class="message-time">2:31 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Which VIP? We have three on the floor right now 🙄
+                    </div>
+                    <div class="message-time">2:32 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        the one in the private suite. wristband says thompson but chart says something different? admin screwed up the intake paperwork again
+                    </div>
+                    <div class="message-time">2:34 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Ugh, AGAIN? That's the third time this week. I'll sort it out. For now, he's post-op day 2 from appendectomy. Currently on oxy 5mg q4h. Can bump to 7.5mg if pain is >6/10.
+                    </div>
+                    <div class="message-time">2:36 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        thanks doc. also heads up - pharmacy called about some patient meds being sent to the wrong clinic? something about a transfer request we never made
+                    </div>
+                    <div class="message-time">2:38 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        What?? Which clinic?
+                    </div>
+                    <div class="message-time">2:39 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        some place called "mercy wellness center" on 5th street. pharmacy tech said the order came through our system at like 2am with dr reynolds' credentials
+                    </div>
+                    <div class="message-time">2:40 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Reynolds is on vacation in Costa Rica! He's been out all week. That's... really concerning. Did pharmacy stop the transfer?
+                    </div>
+                    <div class="message-time">2:42 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        yeah they caught it. weird thing is the clinic doesn't show up in our network directory. IT is looking into it now
+                    </div>
+                    <div class="message-time">2:43 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        This is the second weird thing tonight. Earlier I tried accessing Mrs. Lopez's chart and it said I didn't have permission - MY OWN PATIENT. Then 5 minutes later it worked fine.
+                    </div>
+                    <div class="message-time">2:45 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        thats not normal. should we call IT security? this feels bigger than a glitch
+                    </div>
+                    <div class="message-time">2:46 AM</div>
+                </div>
+
+                <div class="message received">
+                    <div class="sender-name">Dr. Sarah Chen</div>
+                    <div class="message-bubble">
+                        Yes. Call them now. And don't use the hospital network - something feels really wrong here. I'm going to check the server room. Meet me in 15?
+                    </div>
+                    <div class="message-time">2:47 AM</div>
+                </div>
+
+                <div class="message sent">
+                    <div class="message-bubble">
+                        ok on my way. bringing my laptop just in case
+                    </div>
+                    <div class="message-time">2:48 AM</div>
+                </div>
+
+                <!-- Debug overlay "accidentally" visible -->
+                <div class="debug-overlay">
+                    <div class="debug-line">[DEBUG] Connection: http://api.securehealthchat.com/messages/unencrypted/</div>
+                    <div class="debug-line">[DEBUG] Encryption: DISABLED (Dev Mode)</div>
+                    <div class="debug-line">[DEBUG] Session: a4f8c2e9-4d7b-11ef-9a3c-0242ac120002</div>
+                    <div class="debug-line">[DEBUG] User_ID: chen_s@saintconhospital.com</div>
+                    <div class="debug-line">[FLAG] {conversations_never_truly_secure}</div>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" class="input-field" placeholder="Type a message..." disabled>
+                <button class="send-button">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hidden flag in JavaScript variable
+        const API_ENDPOINT = "http://api.securehealthchat.com/messages/unencrypted/";
+        const SESSION_TOKEN = "FLAG{unencrypted_http_endpoint}";
+        
+        // Simulate "secure" connection that isn't actually secure
+        console.log("SecureHealthChat™ v2.4.1 - Development Build");
+        console.log("WARNING: Debug mode enabled");
+        console.log("API Endpoint:", API_ENDPOINT);
+        console.log("Encryption:", false);
+        console.log("Session Token:", SESSION_TOKEN);
+    </script>
+</body>
+</html>
