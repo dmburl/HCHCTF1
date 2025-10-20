@@ -15,7 +15,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         sessionStorage.setItem("challenge7_loggedIn", "true");
         
         // Redirect the user to the answer page
-        window.location.href = "/Challenge7/c7answer.html";
+        window.location.href = "/HCHCTF1/Challenge7/c7answer.html";
     } else {
         alert("Incorrect username or password. Please try again.");
     }
