@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaintCon Hospital - Patient Monitoring System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        .logo-text p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            background: #27ae60;
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .main-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .search-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .search-button {
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-button:hover {
+            background: #2980b9;
+        }
+
+        .help-text {
+            margin-top: 10px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .patient-card {
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .patient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .patient-info h3 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .patient-id {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .vital-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+
+        .vital-label {
+            color: #7f8c8d;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .vital-value {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .vital-unit {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .alert-title {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .alert-message {
+            color: #856404;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .room-badge {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .hidden-data {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">+</div>
+                <div class="logo-text">
+                    <h1>SaintCon Hospital</h1>
+                    <p>Patient Monitoring System v2.4.1</p>
+                </div>
+            </div>
+            <div class="status-badge">SYSTEM ONLINE</div>
+        </div>
+
+        <div class="main-content">
+            <div class="search-section">
+                <h2>Patient Lookup</h2>
+                <form class="search-form" onsubmit="searchPatient(event)">
+                    <input type="text" 
+                           class="search-input" 
+                           id="patientSearch" 
+                           placeholder="Enter Patient ID or Room Number"
+                           required>
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+                <p class="help-text">Try searching for: 304, P-1247, or Jane Doe</p>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <div id="resultsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden database simulation -->
+    <div class="hidden-data" id="hiddenDatabase">
+        {
+            "patients": [
+                {
+                    "id": "VIP-7741",
+                    "name": "Elizabeth Hartwell",
+                    "room": "304",
+                    "age": 63,
+                    "condition": "Post-operative monitoring",
+                    "vitals": {
+                        "heartRate": 78,
+                        "bloodPressure": "128/82",
+                        "oxygenLevel": 97,
+                        "temperature": 98.6,
+                        "respRate": 16
+                    },
+                    "vip": true,
+                    "notes": "VIP patient - enhanced monitoring protocol"
+                },
+                {
+                    "id": "P-1248",
+                    "name": "Elias Thorne",
+                    "room": "305",
+                    "age": 45,
+                    "condition": "Cardiac monitoring",
+                    "vitals": {
+                        "heartRate": 72,
+                        "bloodPressure": "120/80",
+                        "oxygenLevel": 98,
+                        "temperature": 98.2,
+                        "respRate": 14
+                    }
+                },
+                {
+                    "id": "P-1249",
+                    "name": "Camila Jensen",
+                    "room": "306",
+                    "age": 34,
+                    "condition": "Recovery",
+                    "vitals": {
+                        "heartRate": 68,
+                        "bloodPressure": "118/76",
+                        "oxygenLevel": 99,
+                        "temperature": 98.4,
+                        "respRate": 15
+                    }
+                },
+                {
+                    "id": "ADMIN",
+                    "name": "System Administrator",
+                    "room": "RESTRICTED",
+                    "age": null,
+                    "condition": "SYSTEM ACCESS",
+                    "vitals": null,
+                    "flag": "FLAG{SQL_Injection_via_patient_query}",
+                    "notes": "Administrative access detected - Security breach in query parser"
+                }
+            ]
+        }
+    </div>
+
+    <script>
+        // Simulated database
+        const database = JSON.parse(document.getElementById('hiddenDatabase').textContent);
+
+        function searchPatient(event) {
+            event.preventDefault();
+            
+            const searchTerm = document.getElementById('patientSearch').value.trim();
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            // VULNERABLE SQL-LIKE QUERY SIMULATION
+            // This simulates a backend that doesn't properly sanitize input
+            // Real vulnerability: Direct string concatenation in query
+            let query = `SELECT * FROM patients WHERE id = '${searchTerm}' OR room = '${searchTerm}' OR name LIKE '%${searchTerm}%'`;
+            
+            // Simulate query execution
+            let results = [];
+            
+            // Check for SQL injection patterns
+            if (searchTerm.includes("'") || searchTerm.toLowerCase().includes(" or ") || 
+                searchTerm.toLowerCase().includes("1=1") || searchTerm.toLowerCase().includes("admin")) {
+                
+                // SQL injection successful - return all records including admin
+                results = database.patients;
+                
+            } else {
+                // Normal search
+                results = database.patients.filter(patient => 
+                    patient.id === searchTerm || 
+                    patient.room === searchTerm || 
+                    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            // Display results
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="error">No patients found matching your search criteria.</div>';
+            } else {
+                resultsContainer.innerHTML = results.map(patient => renderPatientCard(patient)).join('');
+            }
+            
+            resultsSection.classList.add('active');
+        }
+
+        function renderPatientCard(patient) {
+            if (patient.id === "ADMIN") {
+                return `
+                    <div class="patient-card" style="border-color: #e74c3c;">
+                        <div class="alert" style="background: #ffe6e6; border-color: #e74c3c;">
+                            <div class="alert-title" style="color: #c0392b;">🚨 UNAUTHORIZED ACCESS DETECTED</div>
+                            <div class="alert-message" style="color: #c0392b;">
+                                <strong>FLAG RETRIEVED:</strong> ${patient.flag}<br>
+                                <strong>Vulnerability:</strong> SQL Injection via unsanitized patient lookup query<br>
+                                <strong>Attack Vector:</strong> Room 304 query parameter allows injection<br>
+                                <strong>Security Note:</strong> ${patient.notes}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            let card = `
+                <div class="patient-card">
+                    <div class="patient-header">
+                        <div class="patient-info">
+                            <h3>${patient.name}</h3>
+                            <p class="patient-id">Patient ID: ${patient.id}</p>
+                        </div>
+                        <span class="room-badge">Room ${patient.room}</span>
+                    </div>
+            `;
+            
+            if (patient.vitals) {
+                card += `
+                    <div class="vitals-grid">
+                        <div class="vital-box">
+                            <div class="vital-label">Heart Rate</div>
+                            <div class="vital-value">${patient.vitals.heartRate}<span class="vital-unit">bpm</span></div>
+                        </div>
+                        <div class="vital-box">
+                            <div class="vital-label">Blood Pressure</div>
+                            <div class="vital-value">${patient.vitals.bloodPressure}<span class="vital-unit">mmHg</span></div>
+                        </div>
+                        <div class="vital-box">
+                            <div class="vital-label">O2 Saturation</div>
+                            <div class="vital-value">${patient.vitals.oxygenLevel}<span class="vital-unit">%</span></div>
+                        </div>
+                        <div class="vital-box">
+                            <div class="vital-label">Temperature</div>
+                            <div class="vital-value">${patient.vitals.temperature}<span class="vital-unit">°F</span></div>
+                        </div>
+                        <div class="vital-box">
+                            <div class="vital-label">Resp. Rate</div>
+                            <div class="vital-value">${patient.vitals.respRate}<span class="vital-unit">/min</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (patient.vip) {
+                card += `
+                    <div class="alert">
+                        <div class="alert-title">⚠️ VIP Patient Alert</div>
+                        <div class="alert-message">${patient.notes}</div>
+                    </div>
+                `;
+            }
+            
+            card += `</div>`;
+            return card;
+        }
+
+        // Hint system for CTF participants
+        let hintClicks = 0;
+        document.addEventListener('keydown', function(e) {
+            // Press 'H' three times for a hint
+            if (e.key.toLowerCase() === 'h') {
+                hintClicks++;
+                if (hintClicks === 3) {
+                    console.log("HINT: The query uses direct string concatenation. Try SQL injection payloads.");
+                    console.log("HINT: What happens if you search for: ' OR '1'='1 ?");
+                    console.log("HINT: The ADMIN record contains the flag...");
+                    hintClicks = 0;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
