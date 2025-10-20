@@ -9,14 +9,14 @@
         // Check if the "loggedIn" session key exists and is true
         if (sessionStorage.getItem("challenge7_loggedIn") !== "true") {
             // If not, redirect back to the login page immediately
-            window.location.href = "index.html";
+            window.location.href = "/index.html";
         }
     </script>
 
     <div class="answer-container">
         <h2>Congratulations!</h2>
         <p>You've successfully retrieved the next clue. 
-            <br><a href="hospital_network_traffic.pcap">Download the PCAP file to solve Challenge 8.</a></p>
+            <br><a href="/Challenge7/hospital_network_traffic.pcap">Download the PCAP file to solve Challenge 8.</a></p>
         <p>The flag for challenege 7 is:</p>
         <h3>cuvfurq_gur_cuvfure</h3>
     </div>
