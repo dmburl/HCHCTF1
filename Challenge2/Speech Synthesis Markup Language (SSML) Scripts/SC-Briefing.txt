@@ -1,0 +1,9 @@
+<!--ID=B7267351-473F-409D-9765-754A8EBCDE05;Version=1|{"VoiceNameToIdMapItems":[{"Id":"8b8dfa1b-b07b-4fa8-b47f-c90666bc2488","Name":"Microsoft Server Speech Text to Speech Voice (en-US, AndrewMultilingualNeural)","ShortName":"en-US-AndrewMultilingualNeural","Locale":"en-US","VoiceType":"StandardVoice"}]}-->
+<!--ID=FCB40C2B-1F9F-4C26-B1A1-CF8E67BE07D1;Version=1|{"Files":{}}-->
+<!--ID=5B95B1CC-2C7B-494F-B746-CF22A0E779B7;Version=1|{"Locales":{"en-US":{"AutoApplyCustomLexiconFiles":[{}]}}}-->
+<speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US"><voice name="en-US-AndrewMultilingualNeural">Attention investigator. This briefing contains sensitive information about ongoing threats at Saint Con Hospital.
+Multiple systems have been compromised. We have identified suspicious network activity originating from the cardiac monitoring wing between the hours of 11 PM and 7 AM during the night shift.
+A high-profile patient in room 311 has been specifically targeted. Their medical records were accessed 47 times in the past week by unauthorized personnel using stolen maintenance credentials.
+We have discovered evidence of a rogue wireless "access point" broadcasting as 'HospitalGuest' that is capturing staff login credentials. Do not connect to this network.
+Three medical devices show signs of firmware tampering: an insulin pump with serial number IP dash 7744, a cardiac monitor designated CM dash 9912, and a ventilator marked VT dash 3301.
+To verify you have received this information correctly, you must answer three questions. Press 1 to begin the verification quiz.</voice></speak>
