@@ -21,7 +21,7 @@ AssignedPatientLocation format:
 PointOfCare^Room^Bed^Facility^LocationStatus^PersonLocationType
 
 Example:
-PV1|1|I|304^A^01
+PV1|1|I|311^A^01
      |   | |
      |   | +-- Bed
      |   +----- Room  

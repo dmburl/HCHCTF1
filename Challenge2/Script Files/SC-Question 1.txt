@@ -1,4 +1,0 @@
-Question 1: What type of patients are primarily treated in the compromised wing? 
-Press 1 for Cardiac, 
-Press 2 for Pediatric, 
-Press 3 for Surgical.

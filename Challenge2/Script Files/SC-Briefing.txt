@@ -1,6 +1,0 @@
-Attention investigator. This briefing contains sensitive information about ongoing threats at Saint Con Hospital.
-Multiple systems have been compromised. We have identified suspicious network activity originating from the cardiac monitoring wing between the hours of 11 PM and 7 AM during the night shift.
-A high-profile patient in room 311 has been specifically targeted. Their medical records were accessed 47 times in the past week by unauthorized personnel using stolen maintenance credentials.
-We have discovered evidence of a rogue wireless "access point" broadcasting as 'HospitalGuest' that is capturing staff login credentials. Do not connect to this network.
-Three medical devices show signs of firmware tampering: an insulin pump with serial number IP dash 7744, a cardiac monitor designated CM dash 9912, and a ventilator marked VT dash 3301.
-To verify you have received this information correctly, you must answer three questions. Press 1 to begin the verification quiz.
