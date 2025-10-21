@@ -1,0 +1,35 @@
+Timestamp,User_ID,User_Name,Department,Action,Patient_MRN,Patient_Name,Record_Type,IP_Address,Workstation_ID,Access_Reason,Session_Duration
+2025-10-11 06:15:23,EMP-2847,Dr. Sarah Chen,Emergency,VIEW_RECORD,MRN-8834,████ ████,Vital Signs,10.50.2.45,WS-ER-08,Treatment,00:03:42
+2025-10-11 06:22:11,EMP-5012,Nurse James Park,ICU,UPDATE_RECORD,MRN-7721,████ ████,Medication Admin,10.50.4.12,WS-ICU-03,Med Administration,00:02:15
+2025-10-11 07:03:56,EMP-3394,Dr. Michael Torres,Cardiology,VIEW_RECORD,MRN-9182,████ ████,Lab Results,10.50.3.28,WS-CARD-05,Follow-up Care,00:04:33
+2025-10-11 07:18:44,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,VIP-7741,████ ████,Full Record,10.50.1.89,WS-IT-02,System Maintenance,00:01:47
+2025-10-11 07:45:12,EMP-4429,Dr. Lisa Wang,Surgery,VIEW_RECORD,MRN-5567,████ ████,Surgical Notes,10.50.5.33,WS-SURG-11,Pre-op Review,00:06:21
+2025-10-11 08:02:37,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,VIP-7741,████ ████,Billing Info,192.168.99.47,UNKNOWN,System Maintenance,00:08:15
+2025-10-11 08:34:19,EMP-6783,Nurse David Kim,Emergency,VIEW_RECORD,MRN-4492,████ ████,Triage Notes,10.50.2.51,WS-ER-12,Patient Assessment,00:02:56
+2025-10-11 09:11:05,EMP-2201,Dr. Jennifer Brooks,Internal Med,UPDATE_RECORD,MRN-6638,████ ████,Progress Notes,10.50.6.14,WS-IM-07,Daily Rounds,00:05:44
+2025-10-11 09:47:22,EMP-1205,Amanda Rodriguez,IT Support,EXPORT_RECORD,VIP-7741,████ ████,Full Record,192.168.99.47,UNKNOWN,Data Migration,00:12:33
+2025-10-11 10:15:41,EMP-5521,Pharmacist Tom Anderson,Pharmacy,VIEW_RECORD,MRN-7329,████ ████,Medication List,10.50.7.22,WS-PHARM-04,Prescription Review,00:03:18
+2025-10-11 10:33:58,EMP-3109,Nurse Maria Santos,Pediatrics,VIEW_RECORD,MRN-8145,████ ████,Immunization,10.50.8.19,WS-PED-06,Vaccination Record,00:02:41
+2025-10-11 11:02:14,EMP-4667,Dr. Robert Chang,Radiology,VIEW_RECORD,MRN-5891,████ ████,Imaging Studies,10.50.9.37,WS-RAD-09,Image Review,00:07:52
+2025-10-11 11:28:36,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,MRN-7823,████ ████,Full Record,192.168.99.47,UNKNOWN,Access Audit,00:04:21
+2025-10-11 12:04:47,EMP-7234,Dr. Emily Foster,Neurology,VIEW_RECORD,MRN-4756,████ ████,Diagnostic Tests,10.50.10.43,WS-NEUR-02,Consult Review,00:05:09
+2025-10-11 12:45:13,EMP-2847,Dr. Sarah Chen,Emergency,UPDATE_RECORD,MRN-9203,████ ████,Discharge Summary,10.50.2.45,WS-ER-08,Patient Discharge,00:08:37
+2025-10-11 13:19:28,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,VIP-7741,████ ████,Insurance Info,192.168.99.47,UNKNOWN,Billing Support,00:06:44
+2025-10-11 13:52:41,EMP-5012,Nurse James Park,ICU,VIEW_RECORD,MRN-6117,████ ████,Vital Signs,10.50.4.12,WS-ICU-03,Monitoring,00:02:28
+2025-10-11 14:27:05,EMP-8856,Lab Tech Rachel Green,Laboratory,UPDATE_RECORD,MRN-7445,████ ████,Lab Results,10.50.11.56,WS-LAB-08,Results Entry,00:04:15
+2025-10-11 14:58:32,EMP-1205,Amanda Rodriguez,IT Support,EXPORT_RECORD,VIP-7741,████ ████,Medical History,192.168.99.47,UNKNOWN,Backup Process,00:15:47
+2025-10-11 15:21:19,EMP-3394,Dr. Michael Torres,Cardiology,VIEW_RECORD,MRN-8234,████ ████,ECG Results,10.50.3.28,WS-CARD-05,Cardiac Review,00:06:03
+2025-10-11 15:44:56,EMP-9102,Social Worker Kate Miller,Social Services,VIEW_RECORD,MRN-5329,████ ████,Demographics,10.50.12.41,WS-SW-01,Case Management,00:03:37
+2025-10-11 16:08:23,EMP-4429,Dr. Lisa Wang,Surgery,UPDATE_RECORD,MRN-6681,████ ████,Post-op Notes,10.50.5.33,WS-SURG-11,Post-op Follow-up,00:07:21
+2025-10-11 16:35:47,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,MRN-9567,████ ████,Full Record,192.168.99.47,UNKNOWN,System Check,00:03:52
+2025-10-11 17:02:14,EMP-6783,Nurse David Kim,Emergency,VIEW_RECORD,MRN-7812,████ ████,Allergy Info,10.50.2.51,WS-ER-12,Treatment Planning,00:01:59
+2025-10-11 17:29:38,EMP-2201,Dr. Jennifer Brooks,Internal Med,VIEW_RECORD,MRN-4423,████ ████,Consultation Notes,10.50.6.14,WS-IM-07,Patient Review,00:04:46
+2025-10-11 18:11:25,EMP-1205,Amanda Rodriguez,IT Support,EXPORT_RECORD,VIP-7741,████ ████,Complete EHR,192.168.99.47,UNKNOWN,Archive Request,00:22:18
+2025-10-11 18:47:09,EMP-5521,Pharmacist Tom Anderson,Pharmacy,UPDATE_RECORD,MRN-8091,████ ████,Prescription,10.50.7.22,WS-PHARM-04,New Prescription,00:02:54
+2025-10-11 19:15:33,EMP-7234,Dr. Emily Foster,Neurology,VIEW_RECORD,MRN-6234,████ ████,MRI Results,10.50.10.43,WS-NEUR-02,Diagnostic Review,00:08:12
+2025-10-11 19:52:41,EMP-3109,Nurse Maria Santos,Pediatrics,UPDATE_RECORD,MRN-5178,████ ████,Growth Chart,10.50.8.19,WS-PED-06,Well-child Visit,00:03:27
+2025-10-11 20:18:56,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,VIP-7741,████ ████,Diagnostic Images,192.168.99.47,UNKNOWN,Technical Support,00:09:33
+2025-10-11 21:04:22,EMP-8856,Lab Tech Rachel Green,Laboratory,VIEW_RECORD,MRN-9876,████ ████,Pending Tests,10.50.11.56,WS-LAB-08,Test Verification,00:02:18
+2025-10-11 21:47:15,EMP-1205,Amanda Rodriguez,IT Support,EXPORT_RECORD,VIP-7741,████ ████,Full Record,192.168.99.47,UNKNOWN,Data Request,00:18:42
+2025-10-11 22:23:38,EMP-4667,Dr. Robert Chang,Radiology,VIEW_RECORD,MRN-7203,████ ████,CT Scan,10.50.9.37,WS-RAD-09,After-hours Review,00:11:24
+2025-10-11 23:15:47,EMP-1205,Amanda Rodriguez,IT Support,VIEW_RECORD,VIP-7741,████ ████,Contact Info,192.168.99.47,UNKNOWN,System Update,00:05:16

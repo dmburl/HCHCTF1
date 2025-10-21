@@ -1,0 +1,40 @@
+
+# Challenge 14: DICOM Manipulation - Hints
+
+## Hint 1 (Easy - 10 points penalty)
+"DICOM files can contain private tags that aren't displayed by standard viewers. Try using command-line tools to see ALL metadata."
+
+## Hint 2 (Medium - 20 points penalty)
+"Look for tags in the 0x0009 and 0x0011 ranges. Also check the ImageComments field - it's often overlooked."
+
+## Hint 3 (Hard - 30 points penalty)
+"Use dcmdump or pydicom to examine every single tag. The attacker only modified standard patient identification fields."
+
+## Solution Commands:
+
+### Using dcmdump (DCMTK):
+```bash
+dcmdump hospital_xray_20241015.dcm | grep -i "comment\|private\|original"
+```
+
+### Using pydicom (Python):
+```python
+import pydicom
+ds = pydicom.dcmread('hospital_xray_20241015.dcm')
+print(ds.ImageComments)
+print(ds[0x0009, 0x1001].value)  # Original patient name
+print(ds[0x0009, 0x1002].value)  # Original patient ID
+```
+
+### Using exiftool:
+```bash
+exiftool -a -G1 hospital_xray_20241015.dcm | grep -i comment
+```
+
+## Flag Format:
+FLAG{VIP_PATIENT_ELIZABETH_HARTWELL_311_COMPROMISED}
+
+## Story Connection:
+- Elizabeth Hartwell is the VIP patient from Room 311 (Challenge 2 IVR, Challenge 3 Wristband)
+- This proves her cardiac imaging data was specifically targeted
+- The attacker tried to hide the evidence by spoofing the patient name
