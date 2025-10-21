@@ -1,5 +1,0 @@
-Welcome to the Saint Con Hospital emergency information line. 
-This is an automated secure briefing system.
-If you have the access code from the USB drive, press 1.
-If you are hospital staff reporting suspicious activity, press 2.
-For all other inquiries, press 9.

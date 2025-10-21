@@ -1,5 +1,0 @@
-Attention all staff. Code Blue, Room 311. Repeat, Code Blue, Room 311.
-Biomedical engineering please report to stations Alpha-Seven-Delta-Four-Two-Nine.
-Priority maintenance required on UMDNS codes 12647, 14355, and 13215.
-Philips IntelliVue monitors, GE Care scape ventilators, and Alaris infusion pumps affected.
-End transmission. Flag: STCON dash UMDNS dash 12647 dash 14355 dash 13215

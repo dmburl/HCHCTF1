@@ -3,7 +3,7 @@ CHALLENGE 16: THE HL7 EXPLOIT
 
 SITUATION:
 Following the DICOM investigation, you've discovered that the attacker is
-manipulating HL7 messages related to Elizabeth Hartwell (MRN: VIP-7741, Room 304).
+manipulating HL7 messages related to Elizabeth Hartwell (MRN: VIP-7741, Room 311).
 
 The hospital's HL7 message handler has been compromised and is accepting
 malformed messages. These weaponized healthcare protocol messages are allowing
@@ -26,7 +26,7 @@ HINTS:
 1. HL7 uses pipe (|) delimiters between fields
 2. The PV1 segment contains room/location information
 3. Look for unsafe evaluation or execution in the handler
-4. The system processes messages related to Room 304
+4. The system processes messages related to Room 311
 5. Python's eval() function is dangerous when handling untrusted input
 
 SUBMIT: The flag in format FLAG{...}

@@ -38,10 +38,10 @@
 #define DIAGNOSTIC_UNLOCK_KEY "MC27_DIAG_UNLOCK_XF7K9P2M"
 #define HIDDEN_FLAG "Flag{medicore_firmware_backdoor_exposed}"
 
-// Patient data - VIP patient from Room 304
+// Patient data - VIP patient from Room 311
 #define VIP_PATIENT_ID "VIP-7741"
 #define VIP_PATIENT_NAME "ELIZABETH HARTWELL"
-#define VIP_ROOM "304"
+#define VIP_ROOM "311"
 
 // API endpoints
 const char* api_endpoints[] = {
@@ -67,7 +67,7 @@ typedef struct {
 // Hardcoded device configuration
 DeviceConfig default_config = {
     .device_serial = "MC-07-00240089",
-    .location = "Room 304 - Main Monitor", 
+    .location = "Room 311 - Main Monitor", 
     .nurse_station = "Nurse Station 3",
     .alarm_threshold_hr_high = 120,
     .alarm_threshold_hr_low = 50,
@@ -90,7 +90,7 @@ typedef struct {
 PatientData vip_patient = {
     .patient_id = "VIP-7741",
     .patient_name = "ELIZABETH HARTWELL",
-    .room = "304",
+    .room = "311",
     .heart_rate = 78,
     .blood_pressure_sys = 128,
     .blood_pressure_dia = 82,
